@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "353708318091",
+    "project_id": "flutter-cab-buddy",
+    "storage_bucket": "flutter-cab-buddy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353708318091:android:4d80725cce98797ca5a38e",
+        "android_client_info": {
+          "package_name": "com.example.cab_buddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "353708318091-mo90p8q2v79tjfimimruh6d4tl17fdt5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cab_buddy",
+            "certificate_hash": "535a81ae8ee270f38c31a5a4e24c444630a60c87"
+          }
+        },
+        {
+          "client_id": "353708318091-nn3t1ot8tp6krcl6g3rv7tks32jul5au.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt1jPsLmdFjS9XcM-TspVxU6017Gk6zSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "353708318091-nn3t1ot8tp6krcl6g3rv7tks32jul5au.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
