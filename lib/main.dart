@@ -51,7 +51,9 @@ class MyApp extends StatelessWidget {
                         LoggedInUserInfo.gender = ss.data.data['gender'];
                         LoggedInUserInfo.sector = ss.data.data['sector'];
                         LoggedInUserInfo.batch = ss.data.data['batch'];
+                        LoggedInUserInfo.url = ss.data.data['image_url'];
                         LoggedInUserInfo.email = userSnapshot.data.email;
+
                         return HomePage();
                       } else {
                         return UserFormScreen(

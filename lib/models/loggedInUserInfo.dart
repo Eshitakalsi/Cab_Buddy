@@ -6,4 +6,5 @@ class LoggedInUserInfo {
   static String batch;
   static String gender;
   static String sector;
+  static String url;
 }

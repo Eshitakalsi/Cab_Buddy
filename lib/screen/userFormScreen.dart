@@ -1,11 +1,15 @@
 import 'dart:io';
-import 'package:dropdown_formfield/dropdown_formfield.dart';
+import 'package:cab_buddy/Pickers/userImagePicker.dart';
 import 'package:cab_buddy/models/loggedInUserInfo.dart';
 import 'package:cab_buddy/screen/homePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../models/loggedInUserInfo.dart';
 
 class UserFormScreen extends StatefulWidget {
   final String _uid;
@@ -25,10 +29,15 @@ class _UserFormScreenState extends State<UserFormScreen> {
   var _year = null;
   var _gender = null;
   var _sector = null;
+  var _imageURL = '';
+  File _userImageFile;
   List<String> _batches = ['B1', 'B2', 'B3', 'B4'];
   List<String> _genders = ['M', 'F'];
   List<String> _sectors = ['62', '128'];
   List<String> _years = ['1', '2', '3', '4', '5'];
+  void _pickedImage(PickedFile image) {
+    _userImageFile = File(image.path);
+  }
 
   Future<void> _submitUserInformation(
       String firstName,
@@ -37,12 +46,19 @@ class _UserFormScreenState extends State<UserFormScreen> {
       String gender,
       String sector,
       String year,
+      File image,
       BuildContext ctx) async {
     try {
       setState(() {
         _isLoading = true;
       });
-
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child('user_image')
+          .child(widget._uid + '.jpg');
+      await ref.putFile(image).onComplete;
+      final url = await ref.getDownloadURL();
+      _imageURL = url;
       await Firestore.instance
           .collection('users')
           .document(widget._uid)
@@ -53,6 +69,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
         'gender': gender,
         'sector': sector,
         'year': year,
+        'image_url': url
       });
       setState(() {
         _isLoading = false;
@@ -108,17 +125,22 @@ class _UserFormScreenState extends State<UserFormScreen> {
     void _trySubmit() {
       final isValid = _formKey.currentState.validate();
       FocusScope.of(context).unfocus();
+      if (_userImageFile == null) {
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text('Please pick an image.'),
+          backgroundColor: Theme.of(context).errorColor,
+        ));
+        return;
+      }
       if (isValid &&
           _batch != null &&
           _year != null &&
           _gender != null &&
           _sector != null) {
-        print('Jello');
         _formKey.currentState.save();
         _submitUserInformation(_firstname.trim(), _lastname.trim(), _batch,
-            _gender, _sector, _year, context);
+            _gender, _sector, _year, _userImageFile, context);
       } else {
-        print('BS');
         return;
       }
     }
@@ -138,6 +160,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
+                    UserImagePicker(_pickedImage),
                     TextFormField(
                       decoration: InputDecoration(labelText: 'FirstName'),
                       validator: (value) {
@@ -263,6 +286,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
       LoggedInUserInfo.sector = _sector;
       LoggedInUserInfo.gender = _gender;
       LoggedInUserInfo.year = _year;
+      LoggedInUserInfo.url = _imageURL;
 
       return HomePage();
     } else {
