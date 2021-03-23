@@ -1,5 +1,6 @@
 import 'package:cab_buddy/screen/errorScreen.dart';
 import 'package:cab_buddy/screen/homePage.dart';
+import 'package:cab_buddy/screen/profilePage.dart';
 import 'package:cab_buddy/screen/signInPage.dart';
 import 'package:cab_buddy/screen/splashScreen.dart';
 import 'package:cab_buddy/screen/userFormScreen.dart';
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
                         LoggedInUserInfo.url = ss.data.data['image_url'];
                         LoggedInUserInfo.email = userSnapshot.data.email;
 
-                        return HomePage();
+                        return ProfilePage();
                       } else {
                         return UserFormScreen(
                             userSnapshot.data.uid, userSnapshot.data.email);

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cab_buddy/Pickers/userImagePicker.dart';
 import 'package:cab_buddy/models/loggedInUserInfo.dart';
 import 'package:cab_buddy/screen/homePage.dart';
+import 'package:cab_buddy/screen/profilePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -288,7 +289,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
       LoggedInUserInfo.year = _year;
       LoggedInUserInfo.url = _imageURL;
 
-      return HomePage();
+      return ProfilePage();
     } else {
       return userInfoForm;
     }
