@@ -85,7 +85,7 @@ class _SigninSreenState extends State<SigninScreen> {
                   height: MediaQuery.of(context).size.height / 3,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/illustration.png'),
+                      image: AssetImage('assets/car2.gif'),
                     ),
                   ),
                 ),
@@ -93,7 +93,14 @@ class _SigninSreenState extends State<SigninScreen> {
               Column(
                 children: <Widget>[
                   _isLoading
-                      ? CircularProgressIndicator()
+                      ? Container(
+                          height: MediaQuery.of(context).size.height / 7,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/car.gif'),
+                            ),
+                          ),
+                        )
                       : FadeAnimation(
                           1.6,
                           Container(
