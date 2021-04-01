@@ -1,5 +1,6 @@
 import 'package:cab_buddy/screen/errorScreen.dart';
 import 'package:cab_buddy/screen/homePage.dart';
+import 'package:cab_buddy/screen/postAdd.dart';
 import 'package:cab_buddy/screen/profilePage.dart';
 import 'package:cab_buddy/screen/signInPage.dart';
 import 'package:cab_buddy/screen/splashScreen.dart';
@@ -65,6 +66,10 @@ class MyApp extends StatelessWidget {
             }
             return SigninScreen();
           },
-        ));
+        ),
+        initialRoute: '/',
+        routes: {
+          PostAdd.routeName: (ctx) => PostAdd(),
+        });
   }
 }

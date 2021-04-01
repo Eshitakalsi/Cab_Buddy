@@ -1,4 +1,5 @@
 import 'package:cab_buddy/models/loggedInUserInfo.dart';
+import 'package:cab_buddy/screen/postAdd.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -275,6 +276,13 @@ class ProfilePage extends StatelessWidget {
                                     fontSize: 16,
                                   ),
                                 ),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, PostAdd.routeName);
+                                },
+                                child: Text("Press me"),
                               ),
                             ],
                           ),
