@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cab_buddy/Pickers/userImagePicker.dart';
 import 'package:cab_buddy/animation/FadeAnimation.dart';
 import 'package:cab_buddy/models/loggedInUserInfo.dart';
+import 'package:cab_buddy/screen/feedScreen.dart';
 import 'package:cab_buddy/screen/profilePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -345,9 +346,10 @@ class _UserFormScreenState extends State<UserFormScreen> {
       LoggedInUserInfo.year = _year;
       LoggedInUserInfo.url = _imageURL;
 
-      return ProfilePage();
+      return FeedScreen();
     } else {
-      return userForm;
+      // return userForm;
+      return FeedScreen();
     }
   }
 }

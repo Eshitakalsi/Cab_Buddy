@@ -1,4 +1,5 @@
 import 'package:cab_buddy/screen/errorScreen.dart';
+import 'package:cab_buddy/screen/feedScreen.dart';
 import 'package:cab_buddy/screen/homePage.dart';
 import 'package:cab_buddy/screen/postAdd.dart';
 import 'package:cab_buddy/screen/profilePage.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
         title: 'Home Page',
         theme: ThemeData(
           primarySwatch: Colors.teal,
@@ -56,10 +58,11 @@ class MyApp extends StatelessWidget {
                         LoggedInUserInfo.url = ss.data.data['image_url'];
                         LoggedInUserInfo.email = userSnapshot.data.email;
 
-                        return ProfilePage();
+                        return FeedScreen();
                       } else {
-                        return UserFormScreen(
-                            userSnapshot.data.uid, userSnapshot.data.email);
+                        return FeedScreen();
+                        // return UserFormScreen(
+                        //     userSnapshot.data.uid, userSnapshot.data.email);
                       }
                     }
                   });

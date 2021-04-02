@@ -281,7 +281,7 @@ class _PostAddState extends State<PostAdd> {
                                       fontSize: 18),
                                 ),
                               ),
-                      ]))
-                ]))));
+                      ],),),
+                ],),),),);
   }
 }
