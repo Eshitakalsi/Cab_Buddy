@@ -1,7 +1,7 @@
 import 'package:cab_buddy/screen/errorScreen.dart';
 import 'package:cab_buddy/screen/feedScreen.dart';
 import 'package:cab_buddy/screen/homePage.dart';
-import 'package:cab_buddy/screen/postAdd.dart';
+import 'package:cab_buddy/screen/postAd.dart';
 import 'package:cab_buddy/screen/profilePage.dart';
 import 'package:cab_buddy/screen/signInPage.dart';
 import 'package:cab_buddy/screen/splashScreen.dart';
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
         title: 'Home Page',
         theme: ThemeData(
           primarySwatch: Colors.teal,
@@ -60,9 +60,8 @@ class MyApp extends StatelessWidget {
 
                         return FeedScreen();
                       } else {
-                        return FeedScreen();
-                        // return UserFormScreen(
-                        //     userSnapshot.data.uid, userSnapshot.data.email);
+                        return UserFormScreen(
+                            userSnapshot.data.uid, userSnapshot.data.email);
                       }
                     }
                   });
@@ -73,6 +72,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           PostAdd.routeName: (ctx) => PostAdd(),
+          FeedScreen.routeName: (ctx) => FeedScreen(),
         });
   }
 }

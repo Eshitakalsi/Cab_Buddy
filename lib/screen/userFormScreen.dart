@@ -3,6 +3,7 @@ import 'package:cab_buddy/Pickers/userImagePicker.dart';
 import 'package:cab_buddy/animation/FadeAnimation.dart';
 import 'package:cab_buddy/models/loggedInUserInfo.dart';
 import 'package:cab_buddy/screen/feedScreen.dart';
+import 'package:cab_buddy/screen/homePage.dart';
 import 'package:cab_buddy/screen/profilePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -348,8 +349,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
 
       return FeedScreen();
     } else {
-      // return userForm;
-      return FeedScreen();
+      return userForm;
     }
   }
 }
