@@ -5,14 +5,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class FeedScreen extends StatefulWidget {
+class UserAdsScreen extends StatefulWidget {
   static const routeName = "/FeedScreen";
 
   @override
-  _FeedScreenState createState() => _FeedScreenState();
+  _UserAdsScreenState createState() => _UserAdsScreenState();
 }
 
-class _FeedScreenState extends State<FeedScreen> {
+class _UserAdsScreenState extends State<UserAdsScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -39,7 +39,7 @@ class _FeedScreenState extends State<FeedScreen> {
 // scrollDirection: Axis.horizontal,
                     itemCount: userAds.length,
                     itemBuilder: (context, index) {
-                      return userAds[index]['userId'] == LoggedInUserInfo.id
+                      return userAds[index]['userId'] != LoggedInUserInfo.id
                           ? Container(
                               height: 0,
                             )
@@ -88,22 +88,12 @@ class _FeedScreenState extends State<FeedScreen> {
                                                     children: <Widget>[
                                                       locationDetails(
                                                           userAds[index]),
-                                                      RaisedButton(
-                                                        child: userAds[index][
-                                                                    'requestedUsers']
-                                                                .contains(
-                                                                    LoggedInUserInfo
-                                                                        .id)
-                                                            ? Text(
-                                                                'Cancel Request')
-                                                            : Text('Request'),
-                                                        color:
-                                                            Colors.yellow[300],
-                                                        onPressed: () {
-                                                          sendOrDeleteRequest(
-                                                              userAds[index]);
-                                                        },
-                                                      )
+                                                      IconButton(
+                                                          color: Colors.red,
+                                                          iconSize: 30,
+                                                          icon: Icon(
+                                                              Icons.delete),
+                                                          onPressed: () {})
                                                     ],
                                                   )
                                                 ],

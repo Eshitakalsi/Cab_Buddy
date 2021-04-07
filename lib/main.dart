@@ -1,10 +1,10 @@
 import 'package:cab_buddy/screen/errorScreen.dart';
 import 'package:cab_buddy/screen/feedScreen.dart';
-import 'package:cab_buddy/screen/homePage.dart';
 import 'package:cab_buddy/screen/postAd.dart';
 import 'package:cab_buddy/screen/profilePage.dart';
 import 'package:cab_buddy/screen/signInPage.dart';
 import 'package:cab_buddy/screen/splashScreen.dart';
+import 'package:cab_buddy/screen/tabScreen.dart';
 import 'package:cab_buddy/screen/userFormScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
         home: StreamBuilder(
           stream: FirebaseAuth.instance.onAuthStateChanged,
           builder: (ctx, AsyncSnapshot<FirebaseUser> userSnapshot) {
+            print("Change");
             if (userSnapshot.connectionState == ConnectionState.waiting) {
               return SplashScreen();
             }
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
                         LoggedInUserInfo.url = ss.data.data['image_url'];
                         LoggedInUserInfo.email = userSnapshot.data.email;
 
-                        return FeedScreen();
+                        return TabScreen();
                       } else {
                         return UserFormScreen(
                             userSnapshot.data.uid, userSnapshot.data.email);
@@ -73,6 +74,8 @@ class MyApp extends StatelessWidget {
         routes: {
           PostAdd.routeName: (ctx) => PostAdd(),
           FeedScreen.routeName: (ctx) => FeedScreen(),
+          ProfilePage.routeName: (ctx) => ProfilePage(),
+          TabScreen.routeName: (ctx) => TabScreen()
         });
   }
 }

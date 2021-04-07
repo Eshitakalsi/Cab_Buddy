@@ -1,11 +1,19 @@
+import 'package:cab_buddy/Widgets/app_drawer.dart';
 import 'package:cab_buddy/models/loggedInUserInfo.dart';
-import 'package:cab_buddy/screen/postAd.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
+  static const routeName = "/ProfileScreen";
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      drawer: AppDrawer(),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0),
+        child: AppBar(
+          title: Text("Profile"),
+        ),
+      ),
       body: new Container(
         color: Colors.white,
         child: new ListView(
@@ -17,23 +25,6 @@ class ProfilePage extends StatelessWidget {
                   color: Colors.white,
                   child: new Column(
                     children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(left: 20.0, top: 20.0),
-                        child: new Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(left: 25.0),
-                              child: new Text('PROFILE',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.0,
-                                      fontFamily: 'sans-serif-light',
-                                      color: Colors.black)),
-                            )
-                          ],
-                        ),
-                      ),
                       Padding(
                         padding: EdgeInsets.only(top: 20.0),
                         child: new Stack(
@@ -276,13 +267,6 @@ class ProfilePage extends StatelessWidget {
                                     fontSize: 16,
                                   ),
                                 ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                      context, PostAdd.routeName);
-                                },
-                                child: Text("Post Ad"),
                               ),
                             ],
                           ),

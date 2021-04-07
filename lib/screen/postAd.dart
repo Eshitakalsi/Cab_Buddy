@@ -69,6 +69,7 @@ class _PostAddState extends State<PostAdd> {
           'userName': LoggedInUserInfo.name,
           'userYear': LoggedInUserInfo.year,
           'joinedUsers': [],
+          'requestedUsers': [],
         });
         await Firestore.instance.collection('Chats').add({
           'userId': LoggedInUserInfo.id,
@@ -77,6 +78,7 @@ class _PostAddState extends State<PostAdd> {
         setState(() {
           _isLoading = false;
         });
+        Navigator.of(context).pop();
       } on AuthException catch (e) {
         print(e);
         setState(() {
@@ -131,9 +133,7 @@ class _PostAddState extends State<PostAdd> {
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0,
-        brightness: Brightness.light,
-        backgroundColor: Colors.white,
+        title: Text('Post An Add'),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -142,12 +142,6 @@ class _PostAddState extends State<PostAdd> {
           width: double.infinity,
           child: Column(
             children: <Widget>[
-              FadeAnimation(
-                  1,
-                  Text(
-                    "Post An Ad",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  )),
               SizedBox(
                 height: 20,
               ),
