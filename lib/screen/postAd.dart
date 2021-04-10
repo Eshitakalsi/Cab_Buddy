@@ -43,14 +43,11 @@ class _PostAddState extends State<PostAdd> {
       });
       try {
         int adCount = 0;
-        await Firestore.instance
+        var doc = await Firestore.instance
             .collection('Ads')
-            .where('userId', isEqualTo: LoggedInUserInfo.id)
-            .getDocuments()
-            .then((value) {
-          adCount = value.documents.length;
-        });
-        if (adCount == 1) {
+            .document(LoggedInUserInfo.id)
+            .get();
+        if (doc.exists) {
           _scaffoldKey.currentState.showSnackBar(SnackBar(
             content: Text('You cant create two ads'),
             backgroundColor: Theme.of(context).errorColor,
@@ -60,21 +57,22 @@ class _PostAddState extends State<PostAdd> {
           });
           return;
         }
-        await Firestore.instance.collection('Ads').add({
+
+        await Firestore.instance
+            .collection('Ads')
+            .document(LoggedInUserInfo.id)
+            .setData({
           'pickup': _locationFrom,
           'drop': _locationTo,
           'vacancy': _vacancy,
           'date': date,
-          'userId': LoggedInUserInfo.id,
-          'userName': LoggedInUserInfo.name,
-          'userYear': LoggedInUserInfo.year,
           'joinedUsers': [],
           'requestedUsers': [],
         });
-        await Firestore.instance.collection('Chats').add({
+        /*await Firestore.instance.collection('Chats').add({
           'userId': LoggedInUserInfo.id,
           'joinedUsers': [],
-        });
+        });*/
         setState(() {
           _isLoading = false;
         });
