@@ -6,7 +6,7 @@ class ProfilePage extends StatelessWidget {
   static const routeName = "/ProfileScreen";
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       drawer: AppDrawer(),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),

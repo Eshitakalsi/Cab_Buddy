@@ -51,15 +51,7 @@ class _FeedScreenState extends State<FeedScreen> {
                               builder: (context, shot) {
                                 if (shot.connectionState ==
                                     ConnectionState.waiting) {
-                                  return Container(
-                                    height:
-                                        MediaQuery.of(context).size.height / 7,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage('assets/car.gif'),
-                                      ),
-                                    ),
-                                  );
+                                  return Container();
                                 } else {
                                   return Container(
                                     padding: EdgeInsets.fromLTRB(10, 10, 10, 0),

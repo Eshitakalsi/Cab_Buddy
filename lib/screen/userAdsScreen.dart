@@ -1,6 +1,8 @@
 import 'package:cab_buddy/Widgets/app_drawer.dart';
+import 'package:cab_buddy/Widgets/userRequest.dart';
 import 'package:cab_buddy/models/loggedInUserInfo.dart';
 import 'package:cab_buddy/screen/postAd.dart';
+import 'package:cab_buddy/screen/requestLists.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -51,15 +53,7 @@ class _UserAdsScreenState extends State<UserAdsScreen> {
                               builder: (context, shot) {
                                 if (shot.connectionState ==
                                     ConnectionState.waiting) {
-                                  return Container(
-                                    height:
-                                        MediaQuery.of(context).size.height / 7,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage('assets/car.gif'),
-                                      ),
-                                    ),
-                                  );
+                                  return Container();
                                 } else {
                                   return Container(
                                     padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -83,7 +77,8 @@ class _UserAdsScreenState extends State<UserAdsScreen> {
                                                       children: <Widget>[
                                                         Row(
                                                           children: <Widget>[
-                                                            infoIcon(),
+                                                            infoIcon(
+                                                                userAds[index]),
                                                             SizedBox(
                                                               height: 10,
                                                             ),
@@ -148,16 +143,22 @@ class _UserAdsScreenState extends State<UserAdsScreen> {
         });
   }
 
-  Widget infoIcon() {
+  Widget infoIcon(data) {
     return Padding(
       padding: const EdgeInsets.only(left: 15.0),
       child: Align(
           alignment: Alignment.centerLeft,
-          child: Icon(
-            Icons.info,
-            color: Colors.yellow[300],
-            size: 40,
-          )),
+          child: IconButton(
+              onPressed: () {
+                print(data['requestedUsers'].length);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (ctx) => RequestLists(data['requestedUsers'])));
+              },
+              icon: Icon(
+                Icons.info,
+                color: Colors.yellow[300],
+                size: 40,
+              ))),
     );
   }
 

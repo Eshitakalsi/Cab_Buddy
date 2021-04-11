@@ -1,3 +1,4 @@
+import 'package:cab_buddy/Widgets/userRequest.dart';
 import 'package:cab_buddy/screen/errorScreen.dart';
 import 'package:cab_buddy/screen/feedScreen.dart';
 import 'package:cab_buddy/screen/postAd.dart';
@@ -75,7 +76,7 @@ class MyApp extends StatelessWidget {
           PostAdd.routeName: (ctx) => PostAdd(),
           FeedScreen.routeName: (ctx) => FeedScreen(),
           ProfilePage.routeName: (ctx) => ProfilePage(),
-          TabScreen.routeName: (ctx) => TabScreen()
+          TabScreen.routeName: (ctx) => TabScreen(),
         });
   }
 }
