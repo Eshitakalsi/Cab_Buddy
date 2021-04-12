@@ -22,24 +22,26 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           AppBar(
-            title: Text('Hello'),
+            title: Text('Hey There!', style: TextStyle(color: Colors.white),),
             automaticallyImplyLeading: false,
+            iconTheme: IconThemeData(color: Colors.white),
           ),
-          Divider(),
           ListTile(
             leading: Icon(Icons.home),
-            title: Text("Feed"),
+            title: Text("Home"),
             onTap: () {
               Navigator.pushReplacementNamed(context, TabScreen.routeName);
             },
           ),
+          Divider(),
           ListTile(
-            leading: Icon(Icons.info),
+            leading: Icon(Icons.person),
             title: Text("Profile"),
             onTap: () {
               Navigator.pushReplacementNamed(context, ProfilePage.routeName);
             },
           ),
+          Divider(),
           ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text("Logout"),
@@ -47,6 +49,7 @@ class AppDrawer extends StatelessWidget {
               googleSignOut(context);
             },
           ),
+          Divider(),
         ],
       ),
     ));

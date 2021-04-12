@@ -1,4 +1,5 @@
 import 'package:cab_buddy/Widgets/app_drawer.dart';
+import 'package:cab_buddy/commons/theme.dart';
 import 'package:cab_buddy/screen/feedScreen.dart';
 import 'package:cab_buddy/screen/postAd.dart';
 import 'package:cab_buddy/screen/userAdsScreen.dart';
@@ -32,10 +33,17 @@ class _TabScreenState extends State<TabScreen> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
-          title: Text("Cab Buddy"),
+          centerTitle: true,
+          title: Text(
+            "Cab Buddy",
+            style: TextStyle(color: Colors.white),
+          ),
           actions: <Widget>[
             IconButton(
-                icon: Icon(Icons.add),
+                icon: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
                 onPressed: () {
                   Navigator.pushNamed(context, PostAdd.routeName);
                 })
@@ -44,15 +52,16 @@ class _TabScreenState extends State<TabScreen> {
       ),
       body: _pages[_selectPageIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: primaryColor,
         unselectedItemColor: Colors.white,
         selectedItemColor: Colors.yellowAccent,
         currentIndex: _selectPageIndex,
         onTap: _selectPage,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.category), label: 'Main Feed'),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: 'My Ads'),
+              icon: Icon(Icons.list_alt_outlined), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_outline), label: 'My Ads'),
         ],
       ),
     );

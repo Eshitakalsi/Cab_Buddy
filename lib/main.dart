@@ -10,6 +10,7 @@ import 'package:cab_buddy/screen/userFormScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import './commons/theme.dart';
 
 import 'models/loggedInUserInfo.dart';
 
@@ -25,9 +26,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Home Page',
         theme: ThemeData(
-          primarySwatch: Colors.teal,
-          accentColor: Colors.amber,
+          primarySwatch: primarySwatch,
+          primaryColor: primaryColor,
+          accentColor: accentColor,
           errorColor: Colors.red,
+          iconTheme: IconThemeData(color: Colors.white),
         ),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.onAuthStateChanged,

@@ -24,9 +24,9 @@ class _PostAddState extends State<PostAdd> {
   List<String> _locations = [
     'JIIT 62',
     'JIIT 128',
-    'Noida Electronic City',
-    'Vaishali Metro Station',
-    'Shipra Mall'
+    'ElectronicCity',
+    'Vaishali',
+    'ShipraMall'
   ];
   List<String> _vacancies = ['1', '2', '3'];
   List<String> _gates = ['1', '2', '3'];

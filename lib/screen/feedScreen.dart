@@ -57,85 +57,91 @@ class _FeedScreenState extends State<FeedScreen> {
                                     padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                                     height: 220,
                                     width: double.maxFinite,
-                                    child: Card(
-                                      elevation: 5,
-                                      child: Container(
-                                        child: Padding(
-                                          padding: EdgeInsets.all(7),
-                                          child: Stack(children: <Widget>[
-                                            Align(
-                                              alignment: Alignment.centerRight,
-                                              child: Stack(
-                                                children: <Widget>[
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 10, top: 5),
-                                                    child: Column(
-                                                      children: <Widget>[
-                                                        Row(
-                                                          children: <Widget>[
-                                                            infoIcon(),
-                                                            SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            authorDetails(shot),
-                                                            Spacer(),
-                                                            timings(
-                                                                userAds[index]),
-                                                            SizedBox(
-                                                              width: 10,
-                                                            ),
-                                                            carIcon(),
-                                                            SizedBox(
-                                                              width: 20,
-                                                            )
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceEvenly,
-                                                          children: <Widget>[
-                                                            locationDetails(
-                                                                userAds[index]),
-                                                            RaisedButton(
-                                                              child: userAds[index]
-                                                                          [
-                                                                          'requestedUsers']
-                                                                      .contains(
-                                                                          LoggedInUserInfo
-                                                                              .id)
-                                                                  ? Text(
-                                                                      'Cancel Request')
-                                                                  : Text(
-                                                                      'Request'),
-                                                              color: Colors
-                                                                  .yellow[300],
-                                                              onPressed: () {
-                                                                sendOrDeleteRequest(
-                                                                    userAds[
-                                                                        index]);
-                                                              },
-                                                            )
-                                                          ],
-                                                        )
-                                                      ],
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Card(
+                                        elevation: 4,
+                                        child: Container(
+                                          child: Padding(
+                                            padding: EdgeInsets.all(7),
+                                            child: Stack(children: <Widget>[
+                                              Align(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: Stack(
+                                                  children: <Widget>[
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10, top: 5),
+                                                      child: Column(
+                                                        children: <Widget>[
+                                                          Row(
+                                                            children: <Widget>[
+                                                              infoIcon(),
+                                                              SizedBox(
+                                                                height: 10,
+                                                              ),
+                                                              authorDetails(
+                                                                  shot),
+                                                              Spacer(),
+                                                              timings(userAds[
+                                                                  index]),
+                                                              SizedBox(
+                                                                width: 10,
+                                                              ),
+                                                              carIcon(),
+                                                              SizedBox(
+                                                                width: 20,
+                                                              )
+                                                            ],
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceEvenly,
+                                                            children: <Widget>[
+                                                              locationDetails(
+                                                                  userAds[
+                                                                      index]),
+                                                              RaisedButton(
+                                                                child: userAds[index]
+                                                                            [
+                                                                            'requestedUsers']
+                                                                        .contains(LoggedInUserInfo
+                                                                            .id)
+                                                                    ? Text(
+                                                                        'Cancel Request')
+                                                                    : Text(
+                                                                        'Request'),
+                                                                color: Colors
+                                                                        .yellow[
+                                                                    300],
+                                                                onPressed: () {
+                                                                  sendOrDeleteRequest(
+                                                                      userAds[
+                                                                          index]);
+                                                                },
+                                                              )
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          ]),
-                                        ),
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                            top: BorderSide(
-                                              width: 2.0,
-                                              color: Colors.yellow[100],
-                                            ),
+                                                  ],
+                                                ),
+                                              )
+                                            ]),
                                           ),
-                                          color: Colors.white,
+                                          decoration: BoxDecoration(
+                                            border: Border(
+                                              top: BorderSide(
+                                                width: 2.0,
+                                                color: Colors.yellow[100],
+                                              ),
+                                            ),
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),
