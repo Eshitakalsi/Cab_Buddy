@@ -1,14 +1,14 @@
-import 'package:cab_buddy/Widgets/app_drawer.dart';
-import 'package:cab_buddy/Widgets/userRequest.dart';
-import 'package:cab_buddy/models/loggedInUserInfo.dart';
-import 'package:cab_buddy/screen/postAd.dart';
-import 'package:cab_buddy/screen/requestLists.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
 import 'package:intl/intl.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../models/loggedIn_user_info.dart';
+import './request_lists.dart';
+
 class UserAdsScreen extends StatefulWidget {
-  static const routeName = "/FeedScreen";
+  static const routeName = "/feedScreen";
 
   @override
   _UserAdsScreenState createState() => _UserAdsScreenState();

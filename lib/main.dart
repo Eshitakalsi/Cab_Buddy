@@ -1,18 +1,18 @@
-import 'package:cab_buddy/Widgets/userRequest.dart';
-import 'package:cab_buddy/screen/errorScreen.dart';
-import 'package:cab_buddy/screen/feedScreen.dart';
-import 'package:cab_buddy/screen/postAd.dart';
-import 'package:cab_buddy/screen/profilePage.dart';
-import 'package:cab_buddy/screen/signInPage.dart';
-import 'package:cab_buddy/screen/splashScreen.dart';
-import 'package:cab_buddy/screen/tabScreen.dart';
-import 'package:cab_buddy/screen/userFormScreen.dart';
+import 'package:flutter/material.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import './commons/theme.dart';
 
-import 'models/loggedInUserInfo.dart';
+import './screens/error_screen.dart';
+import './screens/feed_screen.dart';
+import './screens/post_ad_screen.dart';
+import './screens/signin_screen.dart';
+import './screens/splash_screen.dart';
+import './screens/tab_screen.dart';
+import './screens/user_form_screen.dart';
+import './commons/theme.dart';
+import './models/loggedIn_user_info.dart';
+import './screens/profile_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -76,9 +76,9 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/',
         routes: {
-          PostAdd.routeName: (ctx) => PostAdd(),
+          PostAdScreen.routeName: (ctx) => PostAdScreen(),
           FeedScreen.routeName: (ctx) => FeedScreen(),
-          ProfilePage.routeName: (ctx) => ProfilePage(),
+          ProfileScreen.routeName: (ctx) => ProfileScreen(),
           TabScreen.routeName: (ctx) => TabScreen(),
         });
   }

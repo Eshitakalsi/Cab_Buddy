@@ -1,9 +1,10 @@
-import 'package:cab_buddy/Widgets/app_drawer.dart';
-import 'package:cab_buddy/models/loggedInUserInfo.dart';
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatelessWidget {
-  static const routeName = "/ProfileScreen";
+import '../widgets/app_drawer.dart';
+import '../models/loggedIn_user_info.dart';
+
+class ProfileScreen extends StatelessWidget {
+  static const routeName = "/profileScreen";
   @override
   Widget build(BuildContext context) {
     return Scaffold(

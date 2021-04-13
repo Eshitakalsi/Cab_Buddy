@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "353708318091-15ehilueh1kq2etmu3qsjk44pef12g2p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cab_buddy",
+            "certificate_hash": "7ed39ed71417d905ca49bf802cfe4ed91afe32f3"
+          }
+        },
+        {
           "client_id": "353708318091-mo90p8q2v79tjfimimruh6d4tl17fdt5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

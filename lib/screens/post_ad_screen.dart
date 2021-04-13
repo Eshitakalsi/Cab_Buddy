@@ -1,25 +1,27 @@
-import 'package:cab_buddy/animation/FadeAnimation.dart';
-import 'package:cab_buddy/models/loggedInUserInfo.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:intl/intl.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
-class PostAdd extends StatefulWidget {
-  static const routeName = "/PostAdd";
+import '../models/loggedIn_user_info.dart';
+
+class PostAdScreen extends StatefulWidget {
+  static const routeName = "/postAdScreen";
 
   @override
-  _PostAddState createState() => _PostAddState();
+  _PostAdScreenState createState() => _PostAdScreenState();
 }
 
-class _PostAddState extends State<PostAdd> {
+class _PostAdScreenState extends State<PostAdScreen> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var _isLoading = false;
-  String _vacancy = null;
-  String _locationFrom = null;
-  String _locationTo = null;
+  String _vacancy;
+  String _locationFrom;
+  String _locationTo;
 
   List<String> _locations = [
     'JIIT 62',
@@ -29,11 +31,11 @@ class _PostAddState extends State<PostAdd> {
     'ShipraMall'
   ];
   List<String> _vacancies = ['1', '2', '3'];
-  List<String> _gates = ['1', '2', '3'];
+  // List<String> _gates = ['1', '2', '3'];
   final format = DateFormat("yyyy-MM-dd");
-  DateTime time = null;
-  TimeOfDay t = null;
-  DateTime date = null;
+  DateTime time;
+  TimeOfDay t;
+  DateTime date;
   static final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class _PostAddState extends State<PostAdd> {
         _isLoading = true;
       });
       try {
-        int adCount = 0;
+        // int adCount = 0;
         var doc = await Firestore.instance
             .collection('Ads')
             .document(LoggedInUserInfo.id)
@@ -131,7 +133,7 @@ class _PostAddState extends State<PostAdd> {
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Post An Add'),
+        title: Text('Post An Ad'),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -152,7 +154,7 @@ class _PostAddState extends State<PostAdd> {
                       hint: _locationFrom == null
                           ? Text('Select Pickup Location')
                           : Text(
-                              'From: ${_locationFrom}',
+                              'From: $_locationFrom',
                             ),
                       items: _locations.map((String val) {
                         return new DropdownMenuItem<String>(
@@ -171,7 +173,7 @@ class _PostAddState extends State<PostAdd> {
                     DropdownButton<String>(
                       hint: _locationTo == null
                           ? Text('Select Drop Location')
-                          : Text('To: ${_locationTo}'),
+                          : Text('To: $_locationTo'),
                       items: _locations.map((String val) {
                         return new DropdownMenuItem<String>(
                           value: val,
@@ -189,7 +191,7 @@ class _PostAddState extends State<PostAdd> {
                     DropdownButton<String>(
                       hint: _vacancy == null
                           ? Text('Select number of vacancies')
-                          : Text('Vacancies: ${_vacancy}'),
+                          : Text('Vacancies: $_vacancy'),
                       items: _vacancies.map((String val) {
                         return new DropdownMenuItem<String>(
                           value: val,

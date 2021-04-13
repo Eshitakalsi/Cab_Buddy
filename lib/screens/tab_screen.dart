@@ -1,12 +1,13 @@
-import 'package:cab_buddy/Widgets/app_drawer.dart';
-import 'package:cab_buddy/commons/theme.dart';
-import 'package:cab_buddy/screen/feedScreen.dart';
-import 'package:cab_buddy/screen/postAd.dart';
-import 'package:cab_buddy/screen/userAdsScreen.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/app_drawer.dart';
+import '../commons/theme.dart';
+import './feed_screen.dart';
+import './post_ad_screen.dart';
+import './user_ads_screen.dart';
+
 class TabScreen extends StatefulWidget {
-  static const routeName = "/TabScreen";
+  static const routeName = "/tabScreen";
 
   @override
   _TabScreenState createState() => _TabScreenState();
@@ -45,7 +46,7 @@ class _TabScreenState extends State<TabScreen> {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(context, PostAdd.routeName);
+                  Navigator.pushNamed(context, PostAdScreen.routeName);
                 })
           ],
         ),

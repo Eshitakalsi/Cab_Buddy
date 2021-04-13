@@ -1,18 +1,18 @@
 import 'dart:io';
-import 'package:cab_buddy/Pickers/userImagePicker.dart';
-import 'package:cab_buddy/animation/FadeAnimation.dart';
-import 'package:cab_buddy/models/loggedInUserInfo.dart';
-import 'package:cab_buddy/screen/feedScreen.dart';
-import 'package:cab_buddy/screen/profilePage.dart';
-import 'package:cab_buddy/screen/tabScreen.dart';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:image_picker/image_picker.dart';
 
-import '../models/loggedInUserInfo.dart';
+import '../pickers/user_image_picker.dart';
+import '../animation/fade_animation.dart';
+import '../models/loggedIn_user_info.dart';
+import './tab_screen.dart';
 
 class UserFormScreen extends StatefulWidget {
   final String _uid;
@@ -28,10 +28,10 @@ class _UserFormScreenState extends State<UserFormScreen> {
   var _isLoading = false;
   var _firstname = ' ';
   var _lastname = ' ';
-  var _batch = null;
-  var _year = null;
-  var _gender = null;
-  var _sector = null;
+  var _batch;
+  var _year;
+  var _gender;
+  var _sector;
   var _imageURL = '';
   File _userImageFile;
   List<String> _batches = ['B1', 'B2', 'B3', 'B4'];

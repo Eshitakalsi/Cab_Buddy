@@ -1,10 +1,11 @@
-import 'package:cab_buddy/models/loggedInUserInfo.dart';
-import 'package:cab_buddy/screen/feedScreen.dart';
-import 'package:cab_buddy/screen/profilePage.dart';
-import 'package:cab_buddy/screen/tabScreen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../models/loggedIn_user_info.dart';
+import '../screens/tab_screen.dart';
+import '../screens/profile_screen.dart';
 
 class AppDrawer extends StatelessWidget {
   Future<void> googleSignOut(BuildContext context) async {
@@ -22,7 +23,10 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           AppBar(
-            title: Text('Hey There!', style: TextStyle(color: Colors.white),),
+            title: Text(
+              'Hey There!',
+              style: TextStyle(color: Colors.white),
+            ),
             automaticallyImplyLeading: false,
             iconTheme: IconThemeData(color: Colors.white),
           ),
@@ -38,7 +42,7 @@ class AppDrawer extends StatelessWidget {
             leading: Icon(Icons.person),
             title: Text("Profile"),
             onTap: () {
-              Navigator.pushReplacementNamed(context, ProfilePage.routeName);
+              Navigator.pushReplacementNamed(context, ProfileScreen.routeName);
             },
           ),
           Divider(),

@@ -1,12 +1,13 @@
-import 'package:cab_buddy/Widgets/app_drawer.dart';
-import 'package:cab_buddy/models/loggedInUserInfo.dart';
-import 'package:cab_buddy/screen/postAd.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:intl/intl.dart';
 
+import '../models/loggedIn_user_info.dart';
+
 class FeedScreen extends StatefulWidget {
-  static const routeName = "/FeedScreen";
+  static const routeName = "/feedScreen";
 
   @override
   _FeedScreenState createState() => _FeedScreenState();
@@ -195,17 +196,42 @@ class _FeedScreenState extends State<FeedScreen> {
   Future<void> sendOrDeleteRequest(data) async {
     String id = data.documentID;
     List l = data['requestedUsers'];
-    if (!l.contains(LoggedInUserInfo.id)) {
-      l.add(LoggedInUserInfo.id);
-    } else {
+    if (l.contains(LoggedInUserInfo.id)) {
       l.remove(LoggedInUserInfo.id);
-    }
-    try {
+      await Firestore.instance
+          .collection('userRequestedAds')
+          .document(LoggedInUserInfo.id)
+          .delete();
       await Firestore.instance
           .collection('Ads')
           .document(id)
           .updateData({'requestedUsers': l});
-    } catch (e) {}
+      return;
+    }
+    final doc1 = await Firestore.instance
+        .collection('userJoinedAds')
+        .document(LoggedInUserInfo.id)
+        .get();
+    if (doc1.exists) {
+      return;
+    }
+    final doc2 = await Firestore.instance
+        .collection('userRequestedAds')
+        .document(LoggedInUserInfo.id)
+        .get();
+    if (doc2.exists) {
+      return;
+    }
+    l.add(LoggedInUserInfo.id);
+    await Firestore.instance
+        .collection('Ads')
+        .document(id)
+        .updateData({'requestedUsers': l});
+
+    await Firestore.instance
+        .collection('userRequestedAds')
+        .document(LoggedInUserInfo.id)
+        .setData({"adId": id});
   }
 
   Widget timings(data) {
