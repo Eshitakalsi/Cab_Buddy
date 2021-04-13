@@ -162,12 +162,13 @@ class _FeedScreenState extends State<FeedScreen> {
     return Padding(
       padding: const EdgeInsets.only(left: 15.0),
       child: Align(
-          alignment: Alignment.centerLeft,
-          child: Icon(
-            Icons.info,
-            color: Colors.yellow[300],
-            size: 40,
-          )),
+        alignment: Alignment.centerLeft,
+        child: Icon(
+          Icons.info,
+          color: Colors.yellow[300],
+          size: 40,
+        ),
+      ),
     );
   }
 

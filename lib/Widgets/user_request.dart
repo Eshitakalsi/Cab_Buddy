@@ -1,3 +1,5 @@
+import 'package:cab_buddy/models/loggedIn_user_info.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class UserRequest extends StatelessWidget {
@@ -36,18 +38,44 @@ class UserRequest extends StatelessWidget {
             children: [
               IconButton(
                   icon: Icon(
+                    Icons.close,
+                    color: Colors.red,
+                  ),
+                  onPressed: () {
+                    denyRequest(snapshot.data.documentID);
+                  }),
+              IconButton(
+                  icon: Icon(
                     Icons.check,
                     color: Colors.green,
                   ),
                   onPressed: () {}),
-              IconButton(
-                  icon: Icon(
-                    Icons.close,
-                    color: Colors.red,
-                  ),
-                  onPressed: () {})
             ],
           ),
         ));
+  }
+
+  Future<void> denyRequest(id) async {
+    try {
+      var doc = await Firestore.instance
+          .collection('Ads')
+          .document(LoggedInUserInfo.id)
+          .get();
+
+      List l = doc['requestedUsers'];
+      l.remove(id);
+      await Firestore.instance
+          .collection('userRequestedAds')
+          .document(id)
+          .delete();
+      await Firestore.instance
+          .collection('Ads')
+          .document(LoggedInUserInfo.id)
+          .updateData({'requestedUsers': l});
+
+      return;
+    } catch (error) {
+      print("...");
+    }
   }
 }

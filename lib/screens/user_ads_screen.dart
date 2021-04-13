@@ -151,8 +151,8 @@ class _UserAdsScreenState extends State<UserAdsScreen> {
           child: IconButton(
               onPressed: () {
                 print(data['requestedUsers'].length);
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (ctx) => RequestLists(data['requestedUsers'])));
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (ctx) => RequestLists()));
               },
               icon: Icon(
                 Icons.info,
