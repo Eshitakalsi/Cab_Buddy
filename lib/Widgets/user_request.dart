@@ -49,10 +49,58 @@ class UserRequest extends StatelessWidget {
                     Icons.check,
                     color: Colors.green,
                   ),
-                  onPressed: () {}),
+                  onPressed: () {
+                    acceptRequest(snapshot.data.documentID);
+                  }),
             ],
           ),
         ));
+  }
+
+  Future<void> acceptRequest(id) async {
+    try {
+      var doc = await Firestore.instance
+          .collection('Ads')
+          .document(LoggedInUserInfo.id)
+          .get();
+
+      List requested = doc['requestedUsers'];
+      requested.remove(id);
+      List joined = doc['joinedUsers'];
+      joined.add(id);
+      String vacancies = doc['vacancy'];
+      var v = int.parse(vacancies);
+      v = v - 1;
+      print(v);
+      if (v == 0) {
+        for (var i = 0; i < requested.length; i++) {
+          await Firestore.instance
+              .collection('userRequestedAds')
+              .document(requested[i])
+              .delete();
+        }
+        requested = [];
+      }
+      await Firestore.instance
+          .collection('userRequestedAds')
+          .document(id)
+          .delete();
+      await Firestore.instance
+          .collection('userJoinedAds')
+          .document(id)
+          .setData({"adId": LoggedInUserInfo.id});
+
+      await Firestore.instance
+          .collection('Ads')
+          .document(LoggedInUserInfo.id)
+          .updateData({
+        'requestedUsers': requested,
+        'joinedUsers': joined,
+        'vacancy': v.toString()
+      });
+    } catch (error) {
+      print(error);
+    }
   }
 
   Future<void> denyRequest(id) async {

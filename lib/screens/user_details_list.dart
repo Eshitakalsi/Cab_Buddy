@@ -1,42 +1,40 @@
-import 'package:cab_buddy/models/loggedIn_user_info.dart';
+import 'package:cab_buddy/Widgets/user_details.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../widgets/user_request.dart';
-
-class RequestLists extends StatelessWidget {
+class UserDetailsList extends StatelessWidget {
+  final id;
+  final isDeleteAllowed;
+  UserDetailsList(this.id, this.isDeleteAllowed);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
-          title: Text("Requests"),
+          title: Text("UserDetails"),
         ),
       ),
       body: StreamBuilder(
-          stream: Firestore.instance
-              .collection('Ads')
-              .document(LoggedInUserInfo.id)
-              .snapshots(),
+          stream: Firestore.instance.collection('Ads').document(id).snapshots(),
           builder: (ctx, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Container();
             }
             return ListView.builder(
-              itemCount: snapshot.data['requestedUsers'].length,
+              itemCount: snapshot.data['joinedUsers'].length,
               itemBuilder: (ctx, idx) {
                 return FutureBuilder(
                   future: Firestore.instance
                       .collection('users')
-                      .document(snapshot.data['requestedUsers'][idx])
+                      .document(snapshot.data['joinedUsers'][idx])
                       .get(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Container();
                     }
-                    return UserRequest(snapshot);
+                    return UserDetails(snapshot, isDeleteAllowed);
                   },
                 );
               },

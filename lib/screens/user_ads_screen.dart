@@ -1,3 +1,4 @@
+import 'package:cab_buddy/screens/user_details_list.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
@@ -77,8 +78,27 @@ class _UserAdsScreenState extends State<UserAdsScreen> {
                                                       children: <Widget>[
                                                         Row(
                                                           children: <Widget>[
-                                                            infoIcon(
-                                                                userAds[index]),
+                                                            Column(
+                                                              children: [
+                                                                infoIcon(
+                                                                    userAds[
+                                                                        index]),
+                                                                IconButton(
+                                                                    icon: Icon(
+                                                                      Icons
+                                                                          .info_outline_rounded,
+                                                                      color: Colors
+                                                                          .black,
+                                                                    ),
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.of(context).push(MaterialPageRoute(
+                                                                          builder: (ctx) => UserDetailsList(
+                                                                              LoggedInUserInfo.id,
+                                                                              true)));
+                                                                    })
+                                                              ],
+                                                            ),
                                                             SizedBox(
                                                               height: 10,
                                                             ),
@@ -108,8 +128,11 @@ class _UserAdsScreenState extends State<UserAdsScreen> {
                                                                 iconSize: 30,
                                                                 icon: Icon(Icons
                                                                     .delete),
-                                                                onPressed:
-                                                                    () {})
+                                                                onPressed: () {
+                                                                  deleteAd(
+                                                                      userAds[
+                                                                          index]);
+                                                                })
                                                           ],
                                                         )
                                                       ],
@@ -150,7 +173,6 @@ class _UserAdsScreenState extends State<UserAdsScreen> {
           alignment: Alignment.centerLeft,
           child: IconButton(
               onPressed: () {
-                print(data['requestedUsers'].length);
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (ctx) => RequestLists()));
               },
@@ -160,6 +182,31 @@ class _UserAdsScreenState extends State<UserAdsScreen> {
                 size: 40,
               ))),
     );
+  }
+
+  Future<void> deleteAd(data) async {
+    try {
+      List requestList = data['requestedUsers'];
+      List joinedList = data['joinedUsers'];
+      for (int i = 0; i < requestList.length; i++) {
+        await Firestore.instance
+            .collection('userRequestedAds')
+            .document(requestList[i])
+            .delete();
+      }
+      for (int i = 0; i < joinedList.length; i++) {
+        await Firestore.instance
+            .collection('userJoinedAds')
+            .document(joinedList[i])
+            .delete();
+      }
+      await Firestore.instance
+          .collection('Ads')
+          .document(data.documentID)
+          .delete();
+    } catch (err) {
+      print(err);
+    }
   }
 
   Widget authorDetails(ss) {
@@ -182,22 +229,6 @@ class _UserAdsScreenState extends State<UserAdsScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> sendOrDeleteRequest(data) async {
-    String id = data.documentID;
-    List l = data['requestedUsers'];
-    if (!l.contains(LoggedInUserInfo.id)) {
-      l.add(LoggedInUserInfo.id);
-    } else {
-      l.remove(LoggedInUserInfo.id);
-    }
-    try {
-      await Firestore.instance
-          .collection('Ads')
-          .document(id)
-          .updateData({'requestedUsers': l});
-    } catch (e) {}
   }
 
   Widget timings(data) {

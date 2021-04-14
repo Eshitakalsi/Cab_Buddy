@@ -1,3 +1,4 @@
+import 'package:cab_buddy/screens/user_details_list.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -40,7 +41,10 @@ class _FeedScreenState extends State<FeedScreen> {
 // scrollDirection: Axis.horizontal,
                     itemCount: userAds.length,
                     itemBuilder: (context, index) {
-                      return userAds[index].documentID == LoggedInUserInfo.id
+                      return userAds[index].documentID == LoggedInUserInfo.id ||
+                              userAds[index]['joinedUsers']
+                                  .contains(LoggedInUserInfo.id) ||
+                              userAds[index]['vacancy'] == "0"
                           ? Container(
                               height: 0,
                             )
@@ -79,7 +83,9 @@ class _FeedScreenState extends State<FeedScreen> {
                                                         children: <Widget>[
                                                           Row(
                                                             children: <Widget>[
-                                                              infoIcon(),
+                                                              infoIcon(userAds[
+                                                                      index]
+                                                                  .documentID),
                                                               SizedBox(
                                                                 height: 10,
                                                               ),
@@ -158,15 +164,21 @@ class _FeedScreenState extends State<FeedScreen> {
         });
   }
 
-  Widget infoIcon() {
+  Widget infoIcon(id) {
     return Padding(
       padding: const EdgeInsets.only(left: 15.0),
       child: Align(
         alignment: Alignment.centerLeft,
-        child: Icon(
-          Icons.info,
-          color: Colors.yellow[300],
-          size: 40,
+        child: IconButton(
+          icon: Icon(
+            Icons.info,
+            color: Colors.yellow[300],
+            size: 40,
+          ),
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (ctx) => UserDetailsList(id, false)));
+          },
         ),
       ),
     );

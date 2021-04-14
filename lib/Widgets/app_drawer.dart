@@ -1,3 +1,4 @@
+import 'package:cab_buddy/screens/joined_ad_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -47,13 +48,21 @@ class AppDrawer extends StatelessWidget {
           ),
           Divider(),
           ListTile(
+            leading: Icon(Icons.queue),
+            title: Text("Joined Ad"),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (ctx) => JoinedAdScreen()));
+            },
+          ),
+          Divider(),
+          ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text("Logout"),
             onTap: () {
               googleSignOut(context);
             },
           ),
-          Divider(),
         ],
       ),
     ));
