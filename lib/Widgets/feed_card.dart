@@ -9,10 +9,17 @@ class FeedCard extends StatelessWidget {
       vertical: 16,
     ),
     alignment: FractionalOffset.centerLeft,
-    child: Image.network(
-      'https://i.pinimg.com/474x/84/46/7f/84467f0fb904f147559e58b55aa8df64.jpg',
-      height: 92,
-      width: 92,
+    child: Container(
+      width: 95,
+      height: 95,
+      decoration: new BoxDecoration(
+        shape: BoxShape.circle,
+        image: new DecorationImage(
+          image: NetworkImage(
+              'https://i.pinimg.com/474x/84/46/7f/84467f0fb904f147559e58b55aa8df64.jpg'),
+          fit: BoxFit.cover,
+        ),
+      ),
     ),
   );
 
