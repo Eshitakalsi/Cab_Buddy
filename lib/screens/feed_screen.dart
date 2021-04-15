@@ -1,4 +1,5 @@
 import 'package:cab_buddy/screens/user_details_list.dart';
+import 'package:cab_buddy/widgets/feed_card.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,150 +19,160 @@ class _FeedScreenState extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: Firestore.instance.collection('Ads').snapshots(),
-        builder: (ctx, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(
-              height: MediaQuery.of(context).size.height / 7,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/car.gif'),
-                ),
-              ),
-            );
-          }
-          final userAds = snapshot.data.documents;
+      stream: Firestore.instance.collection('Ads').snapshots(),
+      builder: (ctx, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: ListView.builder(
-// scrollDirection: Axis.horizontal,
-                    itemCount: userAds.length,
-                    itemBuilder: (context, index) {
-                      return userAds[index].documentID == LoggedInUserInfo.id ||
-                              userAds[index]['joinedUsers']
-                                  .contains(LoggedInUserInfo.id) ||
-                              userAds[index]['vacancy'] == "0"
-                          ? Container(
-                              height: 0,
-                            )
-                          : FutureBuilder(
-                              future: Firestore.instance
-                                  .collection('users')
-                                  .document(userAds[index].documentID)
-                                  .get(),
-                              builder: (context, shot) {
-                                if (shot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Container();
-                                } else {
-                                  return Container(
-                                    padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                                    height: 220,
-                                    width: double.maxFinite,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: Card(
-                                        elevation: 4,
-                                        child: Container(
-                                          child: Padding(
-                                            padding: EdgeInsets.all(7),
-                                            child: Stack(children: <Widget>[
-                                              Align(
-                                                alignment:
-                                                    Alignment.centerRight,
-                                                child: Stack(
-                                                  children: <Widget>[
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 10, top: 5),
-                                                      child: Column(
-                                                        children: <Widget>[
-                                                          Row(
-                                                            children: <Widget>[
-                                                              infoIcon(userAds[
-                                                                      index]
-                                                                  .documentID),
-                                                              SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                              authorDetails(
-                                                                  shot),
-                                                              Spacer(),
-                                                              timings(userAds[
-                                                                  index]),
-                                                              SizedBox(
-                                                                width: 10,
-                                                              ),
-                                                              carIcon(),
-                                                              SizedBox(
-                                                                width: 20,
-                                                              )
-                                                            ],
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceEvenly,
-                                                            children: <Widget>[
-                                                              locationDetails(
-                                                                  userAds[
-                                                                      index]),
-                                                              RaisedButton(
-                                                                child: userAds[index]
-                                                                            [
-                                                                            'requestedUsers']
-                                                                        .contains(LoggedInUserInfo
-                                                                            .id)
-                                                                    ? Text(
-                                                                        'Cancel Request')
-                                                                    : Text(
-                                                                        'Request'),
-                                                                color: Colors
-                                                                        .yellow[
-                                                                    300],
-                                                                onPressed: () {
-                                                                  sendOrDeleteRequest(
-                                                                      userAds[
-                                                                          index]);
-                                                                },
-                                                              )
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
-                                            ]),
-                                          ),
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              top: BorderSide(
-                                                width: 2.0,
-                                                color: Colors.yellow[100],
-                                              ),
-                                            ),
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              });
-                    },
-                  ),
-                ),
-              ],
+            height: MediaQuery.of(context).size.height / 7,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/car.gif'),
+              ),
             ),
           );
-        });
+        }
+        final userAds = snapshot.data.documents;
+        return Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: ListView.builder(
+// scrollDirection: Axis.horizontal,
+                  itemCount: userAds.length,
+                  itemBuilder: (context, index) {
+                    return userAds[index].documentID == LoggedInUserInfo.id ||
+                            userAds[index]['joinedUsers']
+                                .contains(LoggedInUserInfo.id) ||
+                            userAds[index]['vacancy'] == "0"
+                        ? Container(
+                            height: 0,
+                          )
+                        : FutureBuilder(
+                            future: Firestore.instance
+                                .collection('users')
+                                .document(userAds[index].documentID)
+                                .get(),
+                            builder: (context, shot) {
+                              if (shot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Container();
+                              } else {
+                                // return Container(
+                                //   padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                //   height: 220,
+                                //   width: double.maxFinite,
+                                //   child: ClipRRect(
+                                //     borderRadius: BorderRadius.circular(15),
+                                //     child: Card(
+                                //       elevation: 4,
+                                //       child: Container(
+                                //         child: Padding(
+                                //           padding: EdgeInsets.all(7),
+                                //           child: Stack(
+                                //             children: <Widget>[
+                                //               Align(
+                                //                 alignment:
+                                //                     Alignment.centerRight,
+                                //                 child: Stack(
+                                //                   children: <Widget>[
+                                //                     Padding(
+                                //                       padding:
+                                //                           const EdgeInsets
+                                //                                   .only(
+                                //                               left: 10,
+                                //                               top: 5),
+                                //                       child: Column(
+                                //                         children: <Widget>[
+                                //                           Row(
+                                //                             children: <
+                                //                                 Widget>[
+                                //                               infoIcon(userAds[
+                                //                                       index]
+                                //                                   .documentID),
+                                //                               SizedBox(
+                                //                                 height: 10,
+                                //                               ),
+                                //                               authorDetails(
+                                //                                   shot),
+                                //                               Spacer(),
+                                //                               timings(userAds[
+                                //                                   index]),
+                                //                               SizedBox(
+                                //                                 width: 10,
+                                //                               ),
+                                //                               carIcon(),
+                                //                               SizedBox(
+                                //                                 width: 20,
+                                //                               )
+                                //                             ],
+                                //                           ),
+                                //                           Row(
+                                //                             mainAxisAlignment:
+                                //                                 MainAxisAlignment
+                                //                                     .spaceEvenly,
+                                //                             children: <
+                                //                                 Widget>[
+                                //                               locationDetails(
+                                //                                   userAds[
+                                //                                       index]),
+                                //                               RaisedButton(
+                                //                                 child: userAds[index]
+                                //                                             [
+                                //                                             'requestedUsers']
+                                //                                         .contains(LoggedInUserInfo
+                                //                                             .id)
+                                //                                     ? Text(
+                                //                                         'Cancel Request')
+                                //                                     : Text(
+                                //                                         'Request'),
+                                //                                 color: Colors
+                                //                                         .yellow[
+                                //                                     300],
+                                //                                 onPressed:
+                                //                                     () {
+                                //                                   sendOrDeleteRequest(
+                                //                                       userAds[
+                                //                                           index]);
+                                //                                 },
+                                //                               )
+                                //                             ],
+                                //                           )
+                                //                         ],
+                                //                       ),
+                                //                     ),
+                                //                   ],
+                                //                 ),
+                                //               )
+                                //             ],
+                                //           ),
+                                //         ),
+                                //         decoration: BoxDecoration(
+                                //           border: Border(
+                                //             top: BorderSide(
+                                //               width: 2.0,
+                                //               color: Colors.yellow[100],
+                                //             ),
+                                //           ),
+                                //           color: Colors.white,
+                                //         ),
+                                //       ),
+                                //     ),
+                                //   ),
+                                // );
+                                return FeedCard();
+                              }
+                            },
+                          );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Widget infoIcon(id) {

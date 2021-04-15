@@ -4,7 +4,7 @@ import 'package:flutter/material.dart' as material show Colors, MaterialColor;
 
 const material.MaterialColor primarySwatch = material.Colors.purple;
 
-const ui.Color primaryColor = ui.Color(0xff9fd8df);
+const ui.Color primaryColor = ui.Color(0xff1b1a17);
 const ui.Color secondaryColor = ui.Color(0xffe60073);
 const ui.Color accentColor = ui.Color(0xffff7171);
 

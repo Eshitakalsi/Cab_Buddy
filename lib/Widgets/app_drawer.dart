@@ -1,4 +1,3 @@
-import 'package:cab_buddy/screens/joined_ad_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,6 +6,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../models/loggedIn_user_info.dart';
 import '../screens/tab_screen.dart';
 import '../screens/profile_screen.dart';
+import '../screens/joined_ad_screen.dart';
+import '../widgets/feed_card.dart';
 
 class AppDrawer extends StatelessWidget {
   Future<void> googleSignOut(BuildContext context) async {
@@ -61,6 +62,15 @@ class AppDrawer extends StatelessWidget {
             title: Text("Logout"),
             onTap: () {
               googleSignOut(context);
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text("FEED CARD"),
+            onTap: () {
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (ctx) => FeedCard()));
             },
           ),
         ],
