@@ -65,14 +65,6 @@ class AppDrawer extends StatelessWidget {
             },
           ),
           Divider(),
-          ListTile(
-            leading: Icon(Icons.exit_to_app),
-            title: Text("FEED CARD"),
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (ctx) => FeedCard()));
-            },
-          ),
         ],
       ),
     ));

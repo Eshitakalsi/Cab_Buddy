@@ -1,135 +1,29 @@
 import 'package:cab_buddy/commons/theme.dart';
 import 'package:flutter/material.dart';
 
+import 'package:intl/intl.dart';
+
 import './separator.dart';
+import '../screens/request_lists.dart';
 
 class FeedCard extends StatelessWidget {
-  final planetThumbnail = Container(
-    margin: EdgeInsets.symmetric(
-      vertical: 16,
-    ),
-    alignment: FractionalOffset.centerLeft,
-    child: Container(
-      width: 95,
-      height: 95,
-      decoration: new BoxDecoration(
-        shape: BoxShape.circle,
-        image: new DecorationImage(
-          image: NetworkImage(
-              'https://i.pinimg.com/474x/84/46/7f/84467f0fb904f147559e58b55aa8df64.jpg'),
-          fit: BoxFit.cover,
-        ),
-      ),
-    ),
-  );
+  final String imageUrl;
+  final name;
+  final to;
+  final from;
+  final time;
+  final vacancies;
+  final year;
 
-  final planetCard = Container(
-    child: Container(
-      constraints: BoxConstraints.expand(),
-      child: Column(
-        children: [
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.only(
-              left: 80,
-              top: 20,
-            ),
-            child: Text(
-              'Eshita',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 27,
-                color: Colors.white,
-              ),
-              textAlign: TextAlign.start,
-            ),
-          ),
-          Row(
-            children: [
-              Container(
-                margin: EdgeInsets.only(
-                  left: 80,
-                  top: 8,
-                ),
-                child: Text(
-                  'To: 128',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.start,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  left: 20,
-                  top: 8,
-                ),
-                child: Text(
-                  'From: 62',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.start,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 2,
-          ),
-          Separator(),
-          Row(
-            children: [
-              Container(
-                margin: EdgeInsets.only(
-                  left: 80,
-                  top: 8,
-                ),
-                child: Text(
-                  'Left: 2',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.start,
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  left: 20,
-                  top: 8,
-                ),
-                child: Text(
-                  'Time: 2 PM',
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
-                  ),
-                  textAlign: TextAlign.start,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      height: 124,
-      margin: EdgeInsets.only(left: 46),
-      decoration: BoxDecoration(
-        color: primaryColor,
-        shape: BoxShape.rectangle,
-        borderRadius: new BorderRadius.circular(8.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 10,
-            offset: Offset(0.0, 10.0),
-          ),
-        ],
-      ),
-    ),
-  );
+  FeedCard({
+    this.imageUrl,
+    this.name,
+    this.to,
+    this.from,
+    this.time,
+    this.vacancies,
+    this.year,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -140,8 +34,148 @@ class FeedCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
         child: Stack(
           children: [
-            planetCard,
-            planetThumbnail,
+            Container(
+              child: Container(
+                constraints: BoxConstraints.expand(),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: 80,
+                            top: 20,
+                          ),
+                          child: Text(
+                            name,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 27,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 14,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                            top: 22,
+                          ),
+                          child: Text(
+                            'Year: $year',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: 80,
+                            top: 8,
+                          ),
+                          child: Text(
+                            'To: $to',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: 20,
+                            top: 8,
+                          ),
+                          child: Text(
+                            'From: $from',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 4,
+                    ),
+                    Separator(),
+                    Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: 80,
+                            top: 8,
+                          ),
+                          child: Text(
+                            'Left: $vacancies',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: 20,
+                            top: 8,
+                          ),
+                          child: Text(
+                            'Time: ${DateFormat.MMMMd().add_jm().format(time.toDate())}',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                height: 124,
+                margin: EdgeInsets.only(left: 46),
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  shape: BoxShape.rectangle,
+                  borderRadius: new BorderRadius.circular(8.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      offset: Offset(0.0, 10.0),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(
+                vertical: 16,
+              ),
+              alignment: FractionalOffset.centerLeft,
+              child: Container(
+                width: 95,
+                height: 95,
+                decoration: new BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: new DecorationImage(
+                    image: NetworkImage(imageUrl),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
