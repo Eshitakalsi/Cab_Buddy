@@ -1,17 +1,16 @@
-import 'package:cab_buddy/Widgets/user_details.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../models/loggedIn_user_info.dart';
+import '../widgets/info_card.dart';
 
 class AdInfoScreen extends StatefulWidget {
-  final ss;
+  var ss;
   final isDeleteAllowed;
+  final isJoinable;
 
-  AdInfoScreen(
-    this.ss,
-    this.isDeleteAllowed,
-  );
+  AdInfoScreen(this.ss, this.isDeleteAllowed, this.isJoinable);
 
   @override
   _AdInfoScreenState createState() => _AdInfoScreenState();
@@ -26,20 +25,23 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
         child: AppBar(
           title: Text("Information"),
           actions: [
-            FlatButton(
-              onPressed: () {
-                sendOrDeleteRequest();
-              },
-              child: widget.ss['requestedUsers'].contains(LoggedInUserInfo.id)
-                  ? Text(
-                      'Cancel',
-                      style: TextStyle(color: Colors.white),
-                    )
-                  : Text(
-                      'Join',
-                      style: TextStyle(color: Colors.white),
-                    ),
-            )
+            widget.isJoinable
+                ? FlatButton(
+                    onPressed: () {
+                      sendOrDeleteRequest();
+                    },
+                    child: widget.ss['requestedUsers']
+                            .contains(LoggedInUserInfo.id)
+                        ? Text(
+                            'Cancel',
+                            style: TextStyle(color: Colors.white),
+                          )
+                        : Text(
+                            'Join',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                  )
+                : Container(),
             // IconButton(
             //   icon: Icon(
             //     Icons.add,
@@ -61,6 +63,7 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container();
           }
+          widget.ss = snapshot.data;
           return ListView.builder(
             itemCount: snapshot.data['joinedUsers'].length,
             itemBuilder: (ctx, idx) {
@@ -73,7 +76,10 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Container();
                   }
-                  return UserDetails(snapshot, widget.isDeleteAllowed);
+                  return InfoCard(
+                    snapshot: snapshot,
+                    isDeletable: widget.isDeleteAllowed,
+                  );
                 },
               );
             },
@@ -96,6 +102,7 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
           .collection('Ads')
           .document(id)
           .updateData({'requestedUsers': l});
+      setState(() {});
       return;
     }
     final doc1 = await Firestore.instance
@@ -103,6 +110,7 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
         .document(LoggedInUserInfo.id)
         .get();
     if (doc1.exists) {
+      setState(() {});
       return;
     }
     final doc2 = await Firestore.instance
@@ -110,6 +118,7 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
         .document(LoggedInUserInfo.id)
         .get();
     if (doc2.exists) {
+      setState(() {});
       return;
     }
     l.add(LoggedInUserInfo.id);

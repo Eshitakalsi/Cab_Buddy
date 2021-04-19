@@ -7,7 +7,7 @@ import '../models/loggedIn_user_info.dart';
 import '../screens/tab_screen.dart';
 import '../screens/profile_screen.dart';
 import '../screens/joined_ad_screen.dart';
-import '../widgets/feed_card.dart';
+import '../widgets/info_card.dart';
 
 class AppDrawer extends StatelessWidget {
   Future<void> googleSignOut(BuildContext context) async {

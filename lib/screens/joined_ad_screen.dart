@@ -34,6 +34,7 @@ class JoinedAdScreen extends StatelessWidget {
                       return Container();
                     }
                     return JoinedAd(
+                      snapshot: userAds[index],
                       id: userAds[index].documentID,
                       name: shot.data['firstName'],
                       to: userAds[index]['drop'],

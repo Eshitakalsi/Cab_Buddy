@@ -1,4 +1,3 @@
-import 'package:cab_buddy/commons/theme.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,8 +6,11 @@ import 'package:intl/intl.dart';
 
 import './separator.dart';
 import '../screens/request_lists.dart';
+import '../commons/theme.dart';
+import '../screens/ad_info_screen.dart';
 
 class MyAd extends StatelessWidget {
+  final snapshot;
   final imageUrl;
   final id;
   final name;
@@ -20,6 +22,7 @@ class MyAd extends StatelessWidget {
   final joinedList;
 
   MyAd({
+    this.snapshot,
     this.id,
     this.imageUrl,
     this.name,
@@ -69,7 +72,17 @@ class MyAd extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (ctx) => AdInfoScreen(
+                snapshot,
+                true,
+                false,
+              ),
+            ),
+          );
+        },
         child: Container(
           height: 150,
           margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),

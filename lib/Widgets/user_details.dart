@@ -1,6 +1,8 @@
-import 'package:cab_buddy/models/loggedIn_user_info.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../models/loggedIn_user_info.dart';
 
 class UserDetails extends StatelessWidget {
   final snapshot;

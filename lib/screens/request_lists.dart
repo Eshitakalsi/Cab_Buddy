@@ -1,9 +1,9 @@
-import 'package:cab_buddy/models/loggedIn_user_info.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../widgets/user_request.dart';
+import '../models/loggedIn_user_info.dart';
 
 class RequestLists extends StatelessWidget {
   @override

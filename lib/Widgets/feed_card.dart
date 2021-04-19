@@ -1,10 +1,10 @@
-import 'package:cab_buddy/commons/theme.dart';
-import 'package:cab_buddy/screens/ad_info_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
 
 import './separator.dart';
+import '../commons/theme.dart';
+import '../screens/ad_info_screen.dart';
 
 class FeedCard extends StatelessWidget {
   final snapshot;
@@ -38,6 +38,7 @@ class FeedCard extends StatelessWidget {
             builder: (ctx) => AdInfoScreen(
               snapshot,
               false,
+              true,
             ),
           ),
         );
