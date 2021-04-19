@@ -41,13 +41,14 @@ class _TabScreenState extends State<TabScreen> {
           ),
           actions: <Widget>[
             IconButton(
-                icon: Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, PostAdScreen.routeName);
-                })
+              icon: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, PostAdScreen.routeName);
+              },
+            ),
           ],
         ),
       ),

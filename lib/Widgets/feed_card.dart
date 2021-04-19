@@ -1,13 +1,15 @@
 import 'package:cab_buddy/commons/theme.dart';
+import 'package:cab_buddy/screens/ad_info_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
 
 import './separator.dart';
-import '../screens/request_lists.dart';
 
 class FeedCard extends StatelessWidget {
-  final String imageUrl;
+  final snapshot;
+  final joinedUserId;
+  final imageUrl;
   final name;
   final to;
   final from;
@@ -16,6 +18,8 @@ class FeedCard extends StatelessWidget {
   final year;
 
   FeedCard({
+    this.snapshot,
+    this.joinedUserId,
     this.imageUrl,
     this.name,
     this.to,
@@ -28,7 +32,16 @@ class FeedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => AdInfoScreen(
+              snapshot,
+              false,
+            ),
+          ),
+        );
+      },
       child: Container(
         height: 150,
         margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
