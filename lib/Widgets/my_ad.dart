@@ -251,6 +251,7 @@ class MyAd extends StatelessWidget {
             .delete();
       }
       await Firestore.instance.collection('Ads').document(id).delete();
+      await Firestore.instance.collection('Chats').document(id).delete();
     } catch (err) {
       print(err);
     }

@@ -1,15 +1,14 @@
+import 'package:cab_buddy/chats/chat_screen.dart';
+import 'package:cab_buddy/widgets/info_card.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../models/loggedIn_user_info.dart';
-import '../widgets/info_card.dart';
 
 class AdInfoScreen extends StatefulWidget {
   var ss;
   final isDeleteAllowed;
   final isJoinable;
-
   AdInfoScreen(this.ss, this.isDeleteAllowed, this.isJoinable);
 
   @override
@@ -41,7 +40,12 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
                             style: TextStyle(color: Colors.white),
                           ),
                   )
-                : Container(),
+                : IconButton(
+                    icon: Icon(Icons.chat),
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (ctx) => ChatScreen(widget.ss.documentID)));
+                    })
             // IconButton(
             //   icon: Icon(
             //     Icons.add,
@@ -60,10 +64,12 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
             .document(widget.ss.documentID)
             .snapshots(),
         builder: (ctx, snapshot) {
+          widget.ss = snapshot.data;
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Container();
           }
-          widget.ss = snapshot.data;
+          print(snapshot.data['joinedUsers'].length);
+
           return ListView.builder(
             itemCount: snapshot.data['joinedUsers'].length,
             itemBuilder: (ctx, idx) {
@@ -103,6 +109,7 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
           .document(id)
           .updateData({'requestedUsers': l});
       setState(() {});
+
       return;
     }
     final doc1 = await Firestore.instance
@@ -111,6 +118,7 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
         .get();
     if (doc1.exists) {
       setState(() {});
+
       return;
     }
     final doc2 = await Firestore.instance
@@ -119,6 +127,7 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
         .get();
     if (doc2.exists) {
       setState(() {});
+
       return;
     }
     l.add(LoggedInUserInfo.id);

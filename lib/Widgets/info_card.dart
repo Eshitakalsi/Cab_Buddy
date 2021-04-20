@@ -96,7 +96,10 @@ class InfoCard extends StatelessWidget {
                       removeUser(snapshot.data.documentID);
                     },
                   )
-                : Container(),
+                : Container(
+                    width: 0,
+                    height: 0,
+                  ),
             onTap: () {},
           ),
         ),

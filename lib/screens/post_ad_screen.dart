@@ -71,10 +71,11 @@ class _PostAdScreenState extends State<PostAdScreen> {
           'joinedUsers': [],
           'requestedUsers': [],
         });
-        /*await Firestore.instance.collection('Chats').add({
-          'userId': LoggedInUserInfo.id,
-          'joinedUsers': [],
-        });*/
+        await Firestore.instance
+            .collection('Chats')
+            .document(LoggedInUserInfo.id)
+            .setData({});
+
         setState(() {
           _isLoading = false;
         });
