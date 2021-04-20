@@ -13,69 +13,99 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
+  String searchString;
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: Firestore.instance.collection('Ads').snapshots(),
-      builder: (ctx, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Container(
-            height: MediaQuery.of(context).size.height / 7,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/car.gif'),
-              ),
-            ),
-          );
-        }
-        final userAds = snapshot.data.documents;
-        return Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8),
+          child: Row(
             children: <Widget>[
+              SizedBox(
+                width: 30,
+              ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: userAds.length,
-                  itemBuilder: (context, index) {
-                    return userAds[index].documentID == LoggedInUserInfo.id ||
-                            userAds[index]['joinedUsers']
-                                .contains(LoggedInUserInfo.id) ||
-                            userAds[index]['vacancy'] == "0"
-                        ? Container(
-                            height: 0,
-                          )
-                        : FutureBuilder(
-                            future: Firestore.instance
-                                .collection('users')
-                                .document(userAds[index].documentID)
-                                .get(),
-                            builder: (context, shot) {
-                              if (shot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Container();
-                              } else {
-                                return FeedCard(
-                                  snapshot: userAds[index],
-                                  joinedUserId: shot.data.documentID,
-                                  name: shot.data['firstName'],
-                                  to: userAds[index]['drop'],
-                                  from: userAds[index]['pickup'],
-                                  time: userAds[index]['date'],
-                                  vacancies: userAds[index]['vacancy'],
-                                  year: shot.data['year'],
-                                  imageUrl: shot.data['image_url'],
-                                );
-                              }
-                            },
-                          );
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search',
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      searchString = value.toLowerCase();
+                    });
                   },
                 ),
               ),
+              IconButton(icon: Icon(Icons.search), onPressed: () {}),
             ],
           ),
-        );
-      },
+        ),
+        Expanded(
+          child: StreamBuilder(
+            stream: (searchString == null || searchString.trim() == "")
+                ? Firestore.instance.collection('Ads').snapshots()
+                : Firestore.instance
+                    .collection('Ads')
+                    .where("searchIndex",
+                        arrayContains: searchString.toLowerCase())
+                    .snapshots(),
+            builder: (ctx, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Container(height: 0);
+              }
+              final userAds = snapshot.data.documents;
+              return Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: userAds.length,
+                        itemBuilder: (context, index) {
+                          return userAds[index].documentID ==
+                                      LoggedInUserInfo.id ||
+                                  userAds[index]['joinedUsers']
+                                      .contains(LoggedInUserInfo.id) ||
+                                  userAds[index]['vacancy'] == "0"
+                              ? Container(
+                                  height: 0,
+                                )
+                              : StreamBuilder(
+                                  stream: Firestore.instance
+                                      .collection('users')
+                                      .document(userAds[index].documentID)
+                                      .snapshots(),
+                                  builder: (context, shot) {
+                                    if (shot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Container();
+                                    } else {
+                                      return FeedCard(
+                                        snapshot: userAds[index],
+                                        joinedUserId: shot.data.documentID,
+                                        name: shot.data['firstName'],
+                                        to: userAds[index]['drop'],
+                                        from: userAds[index]['pickup'],
+                                        time: userAds[index]['date'],
+                                        vacancies: userAds[index]['vacancy'],
+                                        year: shot.data['year'],
+                                        imageUrl: shot.data['image_url'],
+                                      );
+                                    }
+                                  },
+                                );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

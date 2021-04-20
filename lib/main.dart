@@ -1,3 +1,4 @@
+import 'package:cab_buddy/screens/user_ads_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -62,7 +63,7 @@ class MyApp extends StatelessWidget {
                         LoggedInUserInfo.batch = ss.data.data['batch'];
                         LoggedInUserInfo.url = ss.data.data['image_url'];
                         LoggedInUserInfo.email = userSnapshot.data.email;
-
+                        LoggedInUserInfo.favorites = ss.data['favorites'];
                         return TabScreen();
                       } else {
                         return UserFormScreen(
@@ -80,6 +81,7 @@ class MyApp extends StatelessWidget {
           FeedScreen.routeName: (ctx) => FeedScreen(),
           ProfileScreen.routeName: (ctx) => ProfileScreen(),
           TabScreen.routeName: (ctx) => TabScreen(),
+          UserAdsScreen.routeName: (ctx) => UserAdsScreen(),
         });
   }
 }

@@ -7,4 +7,5 @@ class LoggedInUserInfo {
   static String gender;
   static String sector;
   static String url;
+  static List favorites;
 }

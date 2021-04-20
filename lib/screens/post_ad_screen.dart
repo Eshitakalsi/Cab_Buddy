@@ -26,9 +26,9 @@ class _PostAdScreenState extends State<PostAdScreen> {
   List<String> _locations = [
     'JIIT 62',
     'JIIT 128',
-    'ElectronicCity',
+    'Electronic City',
     'Vaishali',
-    'ShipraMall'
+    'Shipra Mall'
   ];
   List<String> _vacancies = ['1', '2', '3'];
   // List<String> _gates = ['1', '2', '3'];
@@ -59,7 +59,13 @@ class _PostAdScreenState extends State<PostAdScreen> {
           });
           return;
         }
-
+        List<String> splitList = _locationFrom.split(" ");
+        List<String> indexList = [];
+        for (int i = 0; i < splitList.length; i++) {
+          for (int j = 1; j <= splitList[i].length; j++) {
+            indexList.add(splitList[i].substring(0, j).toLowerCase());
+          }
+        }
         await Firestore.instance
             .collection('Ads')
             .document(LoggedInUserInfo.id)
@@ -70,6 +76,7 @@ class _PostAdScreenState extends State<PostAdScreen> {
           'date': date,
           'joinedUsers': [],
           'requestedUsers': [],
+          'searchIndex': indexList,
         });
         await Firestore.instance
             .collection('Chats')

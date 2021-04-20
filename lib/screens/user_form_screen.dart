@@ -33,6 +33,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
   var _gender;
   var _sector;
   var _imageURL = '';
+  var _favorites = [];
   File _userImageFile;
   List<String> _batches = ['B1', 'B2', 'B3', 'B4'];
   List<String> _genders = ['M', 'F'];
@@ -72,7 +73,8 @@ class _UserFormScreenState extends State<UserFormScreen> {
         'gender': gender,
         'sector': sector,
         'year': year,
-        'image_url': url
+        'image_url': url,
+        'favorites': [],
       });
       setState(() {
         _isLoading = false;
@@ -346,7 +348,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
       LoggedInUserInfo.gender = _gender;
       LoggedInUserInfo.year = _year;
       LoggedInUserInfo.url = _imageURL;
-
+      LoggedInUserInfo.favorites = _favorites;
       return TabScreen();
     } else {
       return userForm;

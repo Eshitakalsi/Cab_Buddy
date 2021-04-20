@@ -1,18 +1,19 @@
+import 'package:cab_buddy/widgets/favorite_card.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/loggedIn_user_info.dart';
-import '../widgets/my_ad.dart';
+import '../widgets/feed_card.dart';
 
-class UserAdsScreen extends StatefulWidget {
-  static const routeName = "/UserAdsScreen";
+class FavoriteScreen extends StatefulWidget {
+  static const routeName = "/feedScreen";
 
   @override
-  _UserAdsScreenState createState() => _UserAdsScreenState();
+  _FavoriteScreenState createState() => _FavoriteScreenState();
 }
 
-class _UserAdsScreenState extends State<UserAdsScreen> {
+class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -36,33 +37,34 @@ class _UserAdsScreenState extends State<UserAdsScreen> {
             children: <Widget>[
               Expanded(
                 child: ListView.builder(
-// scrollDirection: Axis.horizontal,
                   itemCount: userAds.length,
                   itemBuilder: (context, index) {
-                    return userAds[index].documentID != LoggedInUserInfo.id
+                    return userAds[index].documentID == LoggedInUserInfo.id ||
+                            userAds[index]['joinedUsers']
+                                .contains(LoggedInUserInfo.id) ||
+                            userAds[index]['vacancy'] == "0"
                         ? Container(
                             height: 0,
                           )
-                        : FutureBuilder(
-                            future: Firestore.instance
+                        : StreamBuilder(
+                            stream: Firestore.instance
                                 .collection('users')
                                 .document(userAds[index].documentID)
-                                .get(),
+                                .snapshots(),
                             builder: (context, shot) {
                               if (shot.connectionState ==
                                   ConnectionState.waiting) {
                                 return Container();
                               } else {
-                                return MyAd(
-                                  id: userAds[index].documentID,
+                                return FavoriteCard(
                                   snapshot: userAds[index],
+                                  joinedUserId: shot.data.documentID,
                                   name: shot.data['firstName'],
                                   to: userAds[index]['drop'],
                                   from: userAds[index]['pickup'],
                                   time: userAds[index]['date'],
                                   vacancies: userAds[index]['vacancy'],
-                                  requestList: userAds[index]['requestedUsers'],
-                                  joinedList: userAds[index]['joinedUsers'],
+                                  year: shot.data['year'],
                                   imageUrl: shot.data['image_url'],
                                 );
                               }

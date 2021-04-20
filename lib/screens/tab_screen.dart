@@ -1,3 +1,4 @@
+import 'package:cab_buddy/screens/favorite_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/app_drawer.dart';
@@ -16,6 +17,7 @@ class TabScreen extends StatefulWidget {
 class _TabScreenState extends State<TabScreen> {
   List<Widget> _pages = [
     FeedScreen(),
+    FavoriteScreen(),
     UserAdsScreen(),
   ];
   int _selectPageIndex = 0;
@@ -62,6 +64,8 @@ class _TabScreenState extends State<TabScreen> {
         items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.list_alt_outlined), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite), label: 'Favorites'),
           BottomNavigationBarItem(
               icon: Icon(Icons.favorite_outline), label: 'My Ads'),
         ],
