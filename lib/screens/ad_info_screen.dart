@@ -34,14 +34,16 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
               label: Text(
                 'Finish Trip',
                 style: TextStyle(color: Colors.white),
-              ))
+              ),
+            )
           : Container(
               height: 0,
             ),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
-          title: Text("Information"),
+          centerTitle: true,
+          title: Text("Passengers"),
           actions: [
             widget.isJoinable
                 ? FlatButton(
@@ -64,7 +66,8 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (ctx) => ChatScreen(widget.ss.documentID)));
-                    })
+                    },
+                  ),
           ],
         ),
       ),
@@ -160,8 +163,8 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
         return StatefulBuilder(builder: (context, sets) {
           return AlertDialog(
             title: _fare == null
-                ? Text('Please enter the fare of the trip!')
-                : Text('Trip fare for single person is!'),
+                ? Text('Enter the total Amount')
+                : Text('Trip Fare for each Passenger'),
             content: _fare == null
                 ? TextField(
                     controller: _textFieldController,
@@ -173,14 +176,24 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
             actions: <Widget>[
               _fare == null
                   ? FlatButton(
-                      child: Text("Confirm"),
+                      child: Text(
+                        "Confirm",
+                        style: TextStyle(color: Colors.black),
+                      ),
                       onPressed: () {
                         sets(() {});
-                        _fare = _textFieldController.text;
+                        _fare = _textFieldController.text == ''
+                            ? null
+                            : _textFieldController.text;
                       },
                     )
                   : FlatButton(
-                      child: Text('FINISH'),
+                      child: Text(
+                        'Finish',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
                       onPressed: () {
                         Navigator.of(context).pop();
                         finishTrip();
@@ -188,7 +201,12 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
                       },
                     ),
               FlatButton(
-                child: Text("CANCEL"),
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                    color: Colors.black,
+                  ),
+                ),
                 onPressed: () {
                   _textFieldController = TextEditingController();
                   _fare = null;

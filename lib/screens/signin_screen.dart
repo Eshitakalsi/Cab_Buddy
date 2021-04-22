@@ -65,19 +65,21 @@ class _SigninSreenState extends State<SigninScreen> {
                     1,
                     Text(
                       "Welcome",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40,
+                      ),
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 15,
                   ),
                   FadeAnimation(
                     1.2,
                     Text(
-                      "Automatic identity verification which enables you to verify your identity",
+                      "We hope you have a great day!",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.grey[700], fontSize: 15),
+                      style: TextStyle(color: Colors.grey, fontSize: 18),
                     ),
                   ),
                 ],
@@ -85,10 +87,10 @@ class _SigninSreenState extends State<SigninScreen> {
               FadeAnimation(
                 1.4,
                 Container(
-                  height: MediaQuery.of(context).size.height / 3,
+                  height: MediaQuery.of(context).size.height / 2,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/car2.gif'),
+                      image: AssetImage('assets/car.png'),
                     ),
                   ),
                 ),
@@ -97,39 +99,42 @@ class _SigninSreenState extends State<SigninScreen> {
                 children: <Widget>[
                   _isLoading
                       ? Container(
-                          height: MediaQuery.of(context).size.height / 7,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/car.gif'),
-                            ),
+                          child: CircularProgressIndicator(
+                            valueColor: new AlwaysStoppedAnimation<Color>(
+                                Colors.black87),
                           ),
                         )
                       : FadeAnimation(
                           1.6,
                           Container(
-                            padding: EdgeInsets.only(top: 3, left: 3),
+                            padding: EdgeInsets.all(3),
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                border: Border(
-                                  bottom: BorderSide(color: Colors.black),
-                                  top: BorderSide(color: Colors.black),
-                                  left: BorderSide(color: Colors.black),
-                                  right: BorderSide(color: Colors.black),
-                                )),
+                              borderRadius: BorderRadius.circular(50),
+                              border: Border(
+                                bottom: BorderSide(color: Colors.black),
+                                top: BorderSide(color: Colors.black),
+                                left: BorderSide(color: Colors.black),
+                                right: BorderSide(color: Colors.black),
+                              ),
+                            ),
                             child: MaterialButton(
                               minWidth: double.infinity,
                               height: 60,
                               onPressed: () {
                                 _loginWithGoogle();
                               },
-                              color: Colors.yellow,
+                              color: Colors.black87,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50)),
+                                borderRadius: BorderRadius.circular(50),
+                              ),
                               child: Text(
                                 "Signup with Google",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 18),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),

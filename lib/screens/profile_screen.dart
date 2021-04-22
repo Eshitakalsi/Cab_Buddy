@@ -12,6 +12,7 @@ class ProfileScreen extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
+          centerTitle: true,
           title: Text("Profile"),
         ),
       ),

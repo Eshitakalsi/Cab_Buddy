@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Home Page',
         theme: ThemeData(
+          fontFamily: 'Montserrat',
           primarySwatch: primarySwatch,
           primaryColor: primaryColor,
           accentColor: accentColor,

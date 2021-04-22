@@ -63,9 +63,9 @@ class _FavoriteCardState extends State<FavoriteCard> {
             return !ss.data['favorites'].contains(widget.snapshot.documentID)
                 ? Container(height: 0)
                 : Container(
-                    height: 150,
+                    height: 175,
                     margin: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 24),
+                        vertical: 16, horizontal: 10),
                     child: Stack(
                       children: [
                         Container(
@@ -100,6 +100,8 @@ class _FavoriteCardState extends State<FavoriteCard> {
                                       child: Text(
                                         'Year: ${widget.year}',
                                         style: TextStyle(
+                                          fontFamily: 'Josefin Sans',
+                                          fontWeight: FontWeight.bold,
                                           color: Colors.white,
                                           fontSize: 18,
                                         ),
@@ -108,12 +110,18 @@ class _FavoriteCardState extends State<FavoriteCard> {
                                     SizedBox(
                                       width: 20,
                                     ),
-                                    IconButton(
-                                      icon: Icon(Icons.favorite),
-                                      onPressed: () {
-                                        toggleFavorite(ss);
-                                      },
-                                      color: Colors.red,
+                                    Container(
+                                      margin: EdgeInsets.only(
+                                        left: 35,
+                                        top: 15,
+                                      ),
+                                      child: IconButton(
+                                        icon: Icon(Icons.favorite),
+                                        onPressed: () {
+                                          toggleFavorite(ss);
+                                        },
+                                        color: Colors.white,
+                                      ),
                                     )
                                   ],
                                 ),
@@ -122,12 +130,14 @@ class _FavoriteCardState extends State<FavoriteCard> {
                                     Container(
                                       margin: EdgeInsets.only(
                                         left: 80,
-                                        top: 8,
+                                        top: 15,
                                       ),
                                       child: Text(
                                         'To: ${widget.to}',
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontFamily: 'Josefin Sans',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
                                           color: Colors.white,
                                         ),
                                         textAlign: TextAlign.start,
@@ -136,12 +146,14 @@ class _FavoriteCardState extends State<FavoriteCard> {
                                     Container(
                                       margin: EdgeInsets.only(
                                         left: 20,
-                                        top: 8,
+                                        top: 15,
                                       ),
                                       child: Text(
                                         'From: ${widget.from}',
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontFamily: 'Josefin Sans',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
                                           color: Colors.white,
                                         ),
                                         textAlign: TextAlign.start,
@@ -163,7 +175,9 @@ class _FavoriteCardState extends State<FavoriteCard> {
                                       child: Text(
                                         'Left: ${widget.vacancies}',
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontFamily: 'Josefin Sans',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
                                           color: Colors.white,
                                         ),
                                         textAlign: TextAlign.start,
@@ -177,7 +191,9 @@ class _FavoriteCardState extends State<FavoriteCard> {
                                       child: Text(
                                         'Time: ${DateFormat.MMMMd().add_jm().format(widget.time.toDate())}',
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontFamily: 'Josefin Sans',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
                                           color: Colors.white,
                                         ),
                                         textAlign: TextAlign.start,

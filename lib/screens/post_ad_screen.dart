@@ -50,10 +50,12 @@ class _PostAdScreenState extends State<PostAdScreen> {
             .document(LoggedInUserInfo.id)
             .get();
         if (doc.exists) {
-          _scaffoldKey.currentState.showSnackBar(SnackBar(
-            content: Text('You cant create two ads'),
-            backgroundColor: Theme.of(context).errorColor,
-          ));
+          _scaffoldKey.currentState.showSnackBar(
+            SnackBar(
+              content: Text('You cant create two ads'),
+              backgroundColor: Theme.of(context).errorColor,
+            ),
+          );
           setState(() {
             _isLoading = false;
           });
@@ -112,25 +114,31 @@ class _PostAdScreenState extends State<PostAdScreen> {
           _vacancy == null ||
           time == null ||
           t == null) {
-        _scaffoldKey.currentState.showSnackBar(SnackBar(
-          content: Text('Please fill all the fields'),
-          backgroundColor: Theme.of(context).errorColor,
-        ));
+        _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+            content: Text('Please fill all the fields'),
+            backgroundColor: Theme.of(context).errorColor,
+          ),
+        );
         return;
       }
       date = DateTimeField.combine(time, t);
       if (date.isBefore(DateTime.now())) {
-        _scaffoldKey.currentState.showSnackBar(SnackBar(
-          content: Text('Please enter correct Time'),
-          backgroundColor: Theme.of(context).errorColor,
-        ));
+        _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+            content: Text('Please enter correct Time'),
+            backgroundColor: Theme.of(context).errorColor,
+          ),
+        );
         return;
       }
       if (_locationFrom == _locationTo) {
-        _scaffoldKey.currentState.showSnackBar(SnackBar(
-          content: Text('Pickup and Drop cannot be same'),
-          backgroundColor: Theme.of(context).errorColor,
-        ));
+        _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+            content: Text('Pickup and Drop cannot be same'),
+            backgroundColor: Theme.of(context).errorColor,
+          ),
+        );
         return;
       }
       _submitUserInformation();
@@ -141,6 +149,7 @@ class _PostAdScreenState extends State<PostAdScreen> {
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Post An Ad'),
       ),
       body: SingleChildScrollView(
@@ -259,11 +268,10 @@ class _PostAdScreenState extends State<PostAdScreen> {
                     ),
                     _isLoading
                         ? Container(
-                            height: MediaQuery.of(context).size.height / 7,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage('assets/car.gif'),
-                              ),
+                            // height: MediaQuery.of(context).size.height / 7,
+                            child: CircularProgressIndicator(
+                              valueColor: new AlwaysStoppedAnimation<Color>(
+                                  Colors.black87),
                             ),
                           )
                         : MaterialButton(
@@ -273,14 +281,17 @@ class _PostAdScreenState extends State<PostAdScreen> {
                               print("hello");
                               _trySubmit();
                             },
-                            color: Colors.greenAccent,
+                            color: Colors.black87,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50)),
                             child: Text(
                               "Post Ad",
                               style: TextStyle(
-                                  fontWeight: FontWeight.w600, fontSize: 18),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                   ],

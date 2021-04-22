@@ -47,15 +47,21 @@ class MyAd extends StatelessWidget {
             builder: (ctx) {
               return AlertDialog(
                 title: Text('Are You Sure?'),
-                content: Text("Do you want to remove the item from the cart?"),
+                content: Text("Do you want to delete your ad?"),
                 actions: <Widget>[
                   FlatButton(
-                      child: Text('No'),
+                      child: Text(
+                        'No',
+                        style: TextStyle(color: Colors.black87),
+                      ),
                       onPressed: () {
                         Navigator.of(ctx).pop(false);
                       }),
                   FlatButton(
-                      child: Text('Yes'),
+                      child: Text(
+                        'Yes',
+                        style: TextStyle(color: Colors.black87),
+                      ),
                       onPressed: () {
                         Navigator.of(ctx).pop(true);
                       }),
@@ -84,8 +90,8 @@ class MyAd extends StatelessWidget {
           );
         },
         child: Container(
-          height: 150,
-          margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          height: 170,
+          margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
           child: Stack(
             children: [
               Container(
@@ -131,12 +137,14 @@ class MyAd extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.only(
                               left: 80,
-                              top: 8,
+                              top: 15,
                             ),
                             child: Text(
                               'To: $to',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontFamily: 'Josefin Sans',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
                                 color: Colors.white,
                               ),
                               textAlign: TextAlign.start,
@@ -145,12 +153,14 @@ class MyAd extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.only(
                               left: 20,
-                              top: 8,
+                              top: 15,
                             ),
                             child: Text(
                               'From: $from',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontFamily: 'Josefin Sans',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 19,
                                 color: Colors.white,
                               ),
                               textAlign: TextAlign.start,
@@ -172,7 +182,9 @@ class MyAd extends StatelessWidget {
                             child: Text(
                               'Left: $vacancies',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontFamily: 'Josefin Sans',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
                                 color: Colors.white,
                               ),
                               textAlign: TextAlign.start,
@@ -186,7 +198,9 @@ class MyAd extends StatelessWidget {
                             child: Text(
                               'Time: ${DateFormat.MMMMd().add_jm().format(time.toDate())}',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontFamily: 'Josefin Sans',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
                                 color: Colors.white,
                               ),
                               textAlign: TextAlign.start,
@@ -214,7 +228,7 @@ class MyAd extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.symmetric(
-                  vertical: 16,
+                  vertical: 12,
                 ),
                 alignment: FractionalOffset.centerLeft,
                 child: Container(

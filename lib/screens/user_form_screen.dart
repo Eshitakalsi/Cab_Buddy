@@ -23,6 +23,7 @@ class UserFormScreen extends StatefulWidget {
 }
 
 class _UserFormScreenState extends State<UserFormScreen> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   static final _formKey = GlobalKey<FormState>();
   bool _hasUserDataAlready = false;
   var _isLoading = false;
@@ -35,7 +36,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
   var _imageURL = '';
   var _favorites = [];
   File _userImageFile;
-  List<String> _batches = ['B1', 'B2', 'B3', 'B4'];
+  List<String> _batches = ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7'];
   List<String> _genders = ['M', 'F'];
   List<String> _sectors = ['62', '128'];
   List<String> _years = ['1', '2', '3', '4', '5'];
@@ -53,9 +54,11 @@ class _UserFormScreenState extends State<UserFormScreen> {
       File image,
       BuildContext ctx) async {
     try {
-      setState(() {
-        _isLoading = true;
-      });
+      setState(
+        () {
+          _isLoading = true;
+        },
+      );
       final ref = FirebaseStorage.instance
           .ref()
           .child('user_image')
@@ -66,20 +69,24 @@ class _UserFormScreenState extends State<UserFormScreen> {
       await Firestore.instance
           .collection('users')
           .document(widget._uid)
-          .setData({
-        'firstName': firstName,
-        'lastName': lastName,
-        'batch': batch,
-        'gender': gender,
-        'sector': sector,
-        'year': year,
-        'image_url': url,
-        'favorites': [],
-      });
-      setState(() {
-        _isLoading = false;
-        _hasUserDataAlready = true;
-      });
+          .setData(
+        {
+          'firstName': firstName,
+          'lastName': lastName,
+          'batch': batch,
+          'gender': gender,
+          'sector': sector,
+          'year': year,
+          'image_url': url,
+          'favorites': [],
+        },
+      );
+      setState(
+        () {
+          _isLoading = false;
+          _hasUserDataAlready = true;
+        },
+      );
     } on PlatformException catch (err) {
       setState(() {
         _isLoading = false;
@@ -88,39 +95,45 @@ class _UserFormScreenState extends State<UserFormScreen> {
       if (err.message != null) {
         message = err.message;
       }
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(
-          message,
-          textAlign: TextAlign.center,
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text(message),
+          backgroundColor: Theme.of(context).errorColor,
         ),
-        backgroundColor: Theme.of(context).errorColor,
-      ));
+      );
     } on HttpException catch (err) {
       print(err);
-      setState(() {
-        _isLoading = false;
-      });
-      Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text(
-            "Please check your Internet Connection",
-            textAlign: TextAlign.center,
-          ),
-          backgroundColor: Theme.of(context).errorColor));
-    } on AuthException catch (err) {
-      setState(() {
-        _isLoading = false;
-      });
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(
-          err.message,
-          textAlign: TextAlign.center,
+      setState(
+        () {
+          _isLoading = false;
+        },
+      );
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text('Please check your internet connection.'),
+          backgroundColor: Theme.of(context).errorColor,
         ),
-        backgroundColor: Theme.of(context).errorColor,
-      ));
+      );
+    } on AuthException catch (err) {
+      setState(
+        () {
+          _isLoading = false;
+        },
+      );
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          content: Text(
+            err.message,
+          ),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
     } catch (error) {
-      setState(() {
-        _isLoading = false;
-      });
+      setState(
+        () {
+          _isLoading = false;
+        },
+      );
       print(error);
     }
   }
@@ -131,10 +144,12 @@ class _UserFormScreenState extends State<UserFormScreen> {
       final isValid = _formKey.currentState.validate();
       FocusScope.of(context).unfocus();
       if (_userImageFile == null) {
-        Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text('Please pick an image.'),
-          backgroundColor: Theme.of(context).errorColor,
-        ));
+        _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+            content: Text('Please pick an image'),
+            backgroundColor: Theme.of(context).errorColor,
+          ),
+        );
         return;
       }
       if (isValid &&
@@ -151,6 +166,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
     }
 
     Widget userForm = Scaffold(
+      key: _scaffoldKey,
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -225,12 +241,14 @@ class _UserFormScreenState extends State<UserFormScreen> {
                               : Text(
                                   _year,
                                 ),
-                          items: _years.map((String val) {
-                            return new DropdownMenuItem<String>(
-                              value: val,
-                              child: new Text(val),
-                            );
-                          }).toList(),
+                          items: _years.map(
+                            (String val) {
+                              return new DropdownMenuItem<String>(
+                                value: val,
+                                child: new Text(val),
+                              );
+                            },
+                          ).toList(),
                           onChanged: (newVal) {
                             _year = newVal;
                             this.setState(() {});
@@ -242,12 +260,14 @@ class _UserFormScreenState extends State<UserFormScreen> {
                               : Text(
                                   _batch,
                                 ),
-                          items: _batches.map((String val) {
-                            return new DropdownMenuItem<String>(
-                              value: val,
-                              child: new Text(val),
-                            );
-                          }).toList(),
+                          items: _batches.map(
+                            (String val) {
+                              return new DropdownMenuItem<String>(
+                                value: val,
+                                child: new Text(val),
+                              );
+                            },
+                          ).toList(),
                           onChanged: (newVal) {
                             _batch = newVal;
                             this.setState(() {});
@@ -259,12 +279,14 @@ class _UserFormScreenState extends State<UserFormScreen> {
                               : Text(
                                   _gender,
                                 ),
-                          items: _genders.map((String val) {
-                            return new DropdownMenuItem<String>(
-                              value: val,
-                              child: new Text(val),
-                            );
-                          }).toList(),
+                          items: _genders.map(
+                            (String val) {
+                              return new DropdownMenuItem<String>(
+                                value: val,
+                                child: new Text(val),
+                              );
+                            },
+                          ).toList(),
                           onChanged: (newVal) {
                             _gender = newVal;
                             this.setState(() {});
@@ -276,12 +298,14 @@ class _UserFormScreenState extends State<UserFormScreen> {
                               : Text(
                                   _sector,
                                 ),
-                          items: _sectors.map((String val) {
-                            return new DropdownMenuItem<String>(
-                              value: val,
-                              child: new Text(val),
-                            );
-                          }).toList(),
+                          items: _sectors.map(
+                            (String val) {
+                              return new DropdownMenuItem<String>(
+                                value: val,
+                                child: new Text(val),
+                              );
+                            },
+                          ).toList(),
                           onChanged: (newVal) {
                             _sector = newVal;
                             this.setState(() {});
@@ -297,42 +321,45 @@ class _UserFormScreenState extends State<UserFormScreen> {
               ),
               _isLoading
                   ? Container(
-                      height: MediaQuery.of(context).size.height / 7,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/car.gif'),
-                        ),
+                      child: CircularProgressIndicator(
+                        valueColor:
+                            new AlwaysStoppedAnimation<Color>(Colors.black87),
                       ),
                     )
                   : FadeAnimation(
                       1.5,
                       Container(
-                        padding: EdgeInsets.only(top: 3, left: 3),
+                        padding: EdgeInsets.all(3),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            border: Border(
-                              bottom: BorderSide(color: Colors.black),
-                              top: BorderSide(color: Colors.black),
-                              left: BorderSide(color: Colors.black),
-                              right: BorderSide(color: Colors.black),
-                            )),
+                          borderRadius: BorderRadius.circular(50),
+                          border: Border(
+                            bottom: BorderSide(color: Colors.black),
+                            top: BorderSide(color: Colors.black),
+                            left: BorderSide(color: Colors.black),
+                            right: BorderSide(color: Colors.black),
+                          ),
+                        ),
                         child: MaterialButton(
                           minWidth: double.infinity,
                           height: 60,
                           onPressed: () {
                             _trySubmit();
                           },
-                          color: Colors.greenAccent,
+                          color: Colors.black87,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50)),
                           child: Text(
                             "Sign up",
                             style: TextStyle(
-                                fontWeight: FontWeight.w600, fontSize: 18),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      )),
+                      ),
+                    ),
             ],
           ),
         ),

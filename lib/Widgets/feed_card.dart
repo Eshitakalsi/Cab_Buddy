@@ -50,62 +50,68 @@ class _FeedCardState extends State<FeedCard> {
         );
       },
       child: StreamBuilder(
-          stream: Firestore.instance
-              .collection('users')
-              .document(LoggedInUserInfo.id)
-              .snapshots(),
-          builder: (context, ss) {
-            if (ss.connectionState == ConnectionState.waiting) {
-              return Container(
-                height: 150,
-              );
-            }
+        stream: Firestore.instance
+            .collection('users')
+            .document(LoggedInUserInfo.id)
+            .snapshots(),
+        builder: (context, ss) {
+          if (ss.connectionState == ConnectionState.waiting) {
             return Container(
               height: 150,
-              margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-              child: Stack(
-                children: [
-                  Container(
-                    child: Container(
-                      constraints: BoxConstraints.expand(),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                  left: 80,
-                                  top: 20,
+            );
+          }
+          return Container(
+            height: 175,
+            margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+            child: Stack(
+              children: [
+                Container(
+                  child: Container(
+                    constraints: BoxConstraints.expand(),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                left: 80,
+                                top: 20,
+                              ),
+                              child: Text(
+                                widget.name,
+                                style: TextStyle(
+                                  fontSize: 27,
+                                  color: Colors.white,
                                 ),
-                                child: Text(
-                                  widget.name,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 27,
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.start,
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 14,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(
+                                top: 22,
+                              ),
+                              child: Text(
+                                'Year: ${widget.year}',
+                                style: TextStyle(
+                                  fontFamily: 'Josefin Sans',
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 20,
                                 ),
                               ),
-                              SizedBox(
-                                width: 14,
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(
+                                left: 35,
+                                top: 15,
                               ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                  top: 22,
-                                ),
-                                child: Text(
-                                  'Year: ${widget.year}',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              IconButton(
+                              child: IconButton(
                                 icon: Icon(ss.data['favorites']
                                         .contains(widget.snapshot.documentID)
                                     ? Icons.favorite
@@ -113,117 +119,127 @@ class _FeedCardState extends State<FeedCard> {
                                 onPressed: () {
                                   toggleFavorite(ss);
                                 },
-                                color: Colors.red,
-                              )
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                  left: 80,
-                                  top: 8,
-                                ),
-                                child: Text(
-                                  'To: ${widget.to}',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.start,
-                                ),
+                                color: Colors.white,
                               ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                  left: 20,
-                                  top: 8,
-                                ),
-                                child: Text(
-                                  'From: ${widget.from}',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Separator(),
-                          Row(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                  left: 80,
-                                  top: 8,
-                                ),
-                                child: Text(
-                                  'Left: ${widget.vacancies}',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                  left: 20,
-                                  top: 8,
-                                ),
-                                child: Text(
-                                  'Time: ${DateFormat.MMMMd().add_jm().format(widget.time.toDate())}',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.start,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      height: 124,
-                      margin: EdgeInsets.only(left: 46),
-                      decoration: BoxDecoration(
-                        color: primaryColor,
-                        shape: BoxShape.rectangle,
-                        borderRadius: new BorderRadius.circular(8.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 10,
-                            offset: Offset(0.0, 10.0),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(
-                      vertical: 16,
-                    ),
-                    alignment: FractionalOffset.centerLeft,
-                    child: Container(
-                      width: 95,
-                      height: 95,
-                      decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: new DecorationImage(
-                          image: NetworkImage(widget.imageUrl),
-                          fit: BoxFit.cover,
+                            )
+                          ],
                         ),
+                        Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                left: 80,
+                                top: 15,
+                              ),
+                              child: Text(
+                                'To: ${widget.to}',
+                                style: TextStyle(
+                                  fontFamily: 'Josefin Sans',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(
+                                left: 20,
+                                top: 15,
+                              ),
+                              child: Text(
+                                'From: ${widget.from}',
+                                style: TextStyle(
+                                  fontFamily: 'Josefin Sans',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 4,
+                        ),
+                        Separator(),
+                        Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                left: 80,
+                                top: 8,
+                              ),
+                              child: Text(
+                                'Left: ${widget.vacancies}',
+                                style: TextStyle(
+                                  fontFamily: 'Josefin Sans',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(
+                                left: 20,
+                                top: 8,
+                              ),
+                              child: Text(
+                                'Time: ${DateFormat.MMMMd().add_jm().format(widget.time.toDate())}',
+                                style: TextStyle(
+                                  fontFamily: 'Josefin Sans',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    height: 124,
+                    margin: EdgeInsets.only(left: 46),
+                    decoration: BoxDecoration(
+                      color: primaryColor,
+                      shape: BoxShape.rectangle,
+                      borderRadius: new BorderRadius.circular(8.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 10,
+                          offset: Offset(0.0, 10.0),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(
+                    vertical: 12,
+                  ),
+                  alignment: FractionalOffset.centerLeft,
+                  child: Container(
+                    width: 95,
+                    height: 95,
+                    decoration: new BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: new DecorationImage(
+                        image: NetworkImage(widget.imageUrl),
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                ],
-              ),
-            );
-          }),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 

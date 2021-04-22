@@ -63,11 +63,11 @@ class _TabScreenState extends State<TabScreen> {
         onTap: _selectPage,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.list_alt_outlined), label: 'Home'),
+              icon: Icon(Icons.home_outlined), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: 'Favorites'),
+              icon: Icon(Icons.favorite_border_outlined), label: 'Favorites'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_outline), label: 'My Ads'),
+              icon: Icon(Icons.my_library_books), label: 'My Ads'),
         ],
       ),
     );

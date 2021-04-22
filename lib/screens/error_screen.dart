@@ -13,16 +13,17 @@ class ErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Center(child: Text("Please Use JIIT EMAIL")),
-        RaisedButton(
-            child: Text("Return to Login Screen"),
-            onPressed: () {
-              googleSignOut();
-            }),
-      ],
-    ));
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Center(child: Text("Please Use JIIT EMAIL")),
+          RaisedButton(
+              child: Text("Return to Login Screen"),
+              onPressed: () {
+                googleSignOut();
+              }),
+        ],
+      ),
+    );
   }
 }

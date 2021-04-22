@@ -21,12 +21,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       builder: (ctx, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(
-            height: MediaQuery.of(context).size.height / 7,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/car.gif'),
-              ),
-            ),
+            height: 0,
           );
         }
         final userAds = snapshot.data.documents;

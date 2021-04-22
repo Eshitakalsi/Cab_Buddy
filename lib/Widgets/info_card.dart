@@ -93,7 +93,7 @@ class InfoCard extends StatelessWidget {
                     color: Colors.red[300],
                     iconSize: 30,
                     onPressed: () {
-                      removeUser(snapshot.data.documentID);
+                      kickUser(context, snapshot.data.documentID);
                     },
                   )
                 : Container(
@@ -129,5 +129,39 @@ class InfoCard extends StatelessWidget {
     } catch (error) {
       print("...");
     }
+  }
+
+  kickUser(BuildContext context, String id) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context, sets) {
+          return AlertDialog(
+            title: Text('Are you sure?'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text(
+                  "Confirm",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: () {
+                  removeUser(id);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+      },
+    );
   }
 }

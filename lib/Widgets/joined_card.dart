@@ -1,3 +1,4 @@
+import 'package:cab_buddy/models/loggedIn_user_info.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -40,25 +41,33 @@ class JoinedAd extends StatelessWidget {
       },
       confirmDismiss: (direction) {
         return showDialog(
-            context: context,
-            builder: (ctx) {
-              return AlertDialog(
-                title: Text('Are You Sure?'),
-                content: Text("Do you want to remove the item from the cart?"),
-                actions: <Widget>[
-                  FlatButton(
-                      child: Text('No'),
-                      onPressed: () {
-                        Navigator.of(ctx).pop(false);
-                      }),
-                  FlatButton(
-                      child: Text('Yes'),
-                      onPressed: () {
-                        Navigator.of(ctx).pop(true);
-                      }),
-                ],
-              );
-            });
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: Text('Are You Sure?'),
+              content: Text("Do you want to leave this room?"),
+              actions: <Widget>[
+                FlatButton(
+                    child: Text(
+                      'No',
+                      style: TextStyle(color: Colors.black87),
+                    ),
+                    onPressed: () {
+                      Navigator.of(ctx).pop(false);
+                    }),
+                FlatButton(
+                  child: Text(
+                    'Yes',
+                    style: TextStyle(color: Colors.black87),
+                  ),
+                  onPressed: () {
+                    Navigator.of(ctx).pop(true);
+                  },
+                ),
+              ],
+            );
+          },
+        );
       },
       direction: DismissDirection.endToStart,
       background: Container(
@@ -81,8 +90,8 @@ class JoinedAd extends StatelessWidget {
           );
         },
         child: Container(
-          height: 150,
-          margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          height: 175,
+          margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
           child: Stack(
             children: [
               Container(
@@ -115,12 +124,14 @@ class JoinedAd extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.only(
                               left: 80,
-                              top: 8,
+                              top: 15,
                             ),
                             child: Text(
                               'To: $to',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontFamily: 'Josefin Sans',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
                                 color: Colors.white,
                               ),
                               textAlign: TextAlign.start,
@@ -129,12 +140,14 @@ class JoinedAd extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.only(
                               left: 20,
-                              top: 8,
+                              top: 15,
                             ),
                             child: Text(
                               'From: $from',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontFamily: 'Josefin Sans',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
                                 color: Colors.white,
                               ),
                               textAlign: TextAlign.start,
@@ -156,7 +169,9 @@ class JoinedAd extends StatelessWidget {
                             child: Text(
                               'Left: $vacancies',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontFamily: 'Josefin Sans',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
                                 color: Colors.white,
                               ),
                               textAlign: TextAlign.start,
@@ -170,7 +185,9 @@ class JoinedAd extends StatelessWidget {
                             child: Text(
                               'Time: ${DateFormat.MMMMd().add_jm().format(time.toDate())}',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontFamily: 'Josefin Sans',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
                                 color: Colors.white,
                               ),
                               textAlign: TextAlign.start,
@@ -198,7 +215,7 @@ class JoinedAd extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.symmetric(
-                  vertical: 16,
+                  vertical: 12,
                 ),
                 alignment: FractionalOffset.centerLeft,
                 child: Container(
@@ -222,14 +239,17 @@ class JoinedAd extends StatelessWidget {
 
   Future<void> leaveRoom() async {
     try {
-      l.remove(id);
+      l.remove(LoggedInUserInfo.id);
       var v = int.parse(vacancies);
       v = v + 1;
       await Firestore.instance.collection('Ads').document(id).updateData({
         'joinedUsers': l,
         'vacancy': v.toString(),
       });
-      Firestore.instance.collection('userJoinedAds').document(id).delete();
+      Firestore.instance
+          .collection('userJoinedAds')
+          .document(LoggedInUserInfo.id)
+          .delete();
     } catch (err) {
       print(err);
     }

@@ -31,13 +31,20 @@ class _FeedScreenState extends State<FeedScreen> {
                     hintText: 'Search',
                   ),
                   onChanged: (value) {
-                    setState(() {
-                      searchString = value.toLowerCase();
-                    });
+                    setState(
+                      () {
+                        searchString = value.toLowerCase();
+                      },
+                    );
                   },
                 ),
               ),
-              IconButton(icon: Icon(Icons.search), onPressed: () {}),
+              IconButton(
+                  icon: Icon(
+                    Icons.search,
+                    color: Colors.black87,
+                  ),
+                  onPressed: () {}),
             ],
           ),
         ),
@@ -52,7 +59,9 @@ class _FeedScreenState extends State<FeedScreen> {
                     .snapshots(),
             builder: (ctx, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Container(height: 0);
+                return Container(
+                  height: 0,
+                );
               }
               final userAds = snapshot.data.documents;
               return Container(

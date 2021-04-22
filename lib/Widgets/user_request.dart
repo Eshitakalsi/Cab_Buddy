@@ -43,16 +43,16 @@ class UserRequest extends StatelessWidget {
                 IconButton(
                   icon: Icon(
                     Icons.close,
-                    color: Colors.red,
+                    color: Colors.red[300],
                   ),
                   onPressed: () {
-                    denyRequest(snapshot.data.documentID);
+                    cancelRequest(context, snapshot.data.documentID);
                   },
                 ),
                 IconButton(
                   icon: Icon(
                     Icons.check,
-                    color: Colors.green,
+                    color: Colors.green[300],
                   ),
                   onPressed: () {
                     acceptRequest(snapshot.data.documentID);
@@ -135,5 +135,39 @@ class UserRequest extends StatelessWidget {
     } catch (error) {
       print("...");
     }
+  }
+
+  cancelRequest(BuildContext context, String id) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(builder: (context, sets) {
+          return AlertDialog(
+            title: Text('Are you sure?'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              FlatButton(
+                child: Text(
+                  "Confirm",
+                  style: TextStyle(color: Colors.black),
+                ),
+                onPressed: () {
+                  denyRequest(id);
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+      },
+    );
   }
 }
