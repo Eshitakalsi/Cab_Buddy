@@ -22,11 +22,27 @@
           }
         },
         {
+          "client_id": "353708318091-87olmr6ssnedfrv1nb208nn0khifrj31.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cab_buddy",
+            "certificate_hash": "9a09c2afaf8c58bd51dbf2e058965a25aea597f8"
+          }
+        },
+        {
           "client_id": "353708318091-mo90p8q2v79tjfimimruh6d4tl17fdt5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.cab_buddy",
             "certificate_hash": "535a81ae8ee270f38c31a5a4e24c444630a60c87"
+          }
+        },
+        {
+          "client_id": "353708318091-qpgi5oens9c9pbkv927j18sk7d417t15.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cab_buddy",
+            "certificate_hash": "259c7d2761d5747bdb7b21c32c354bd6271c2ef1"
           }
         },
         {
