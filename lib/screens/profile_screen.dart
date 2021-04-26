@@ -1,10 +1,34 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 import '../widgets/app_drawer.dart';
 import '../models/loggedIn_user_info.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   static const routeName = "/profileScreen";
+
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    final fbm = FirebaseMessaging();
+    fbm.subscribeToTopic(LoggedInUserInfo.id);
+    fbm.requestNotificationPermissions();
+    fbm.configure(onMessage: (msg) {
+      showSimpleNotification(Text(msg['notification']['body']),
+          background: Colors.black87);
+    }, onLaunch: (msg) {
+      print(msg);
+    }, onResume: (msg) {
+      print(msg);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -41,11 +41,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                         ? Container(
                             height: 0,
                           )
-                        : StreamBuilder(
-                            stream: Firestore.instance
+                        : FutureBuilder(
+                            future: Firestore.instance
                                 .collection('users')
                                 .document(userAds[index].documentID)
-                                .snapshots(),
+                                .get(),
                             builder: (context, shot) {
                               if (shot.connectionState ==
                                   ConnectionState.waiting) {

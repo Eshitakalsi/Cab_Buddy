@@ -1,9 +1,11 @@
 import 'package:cab_buddy/chats/chat_screen.dart';
 
 import 'package:cab_buddy/widgets/info_card.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:overlay_support/overlay_support.dart';
 import '../models/loggedIn_user_info.dart';
 import 'dart:ui' as ui show Color;
 
@@ -20,6 +22,22 @@ class AdInfoScreen extends StatefulWidget {
 class _AdInfoScreenState extends State<AdInfoScreen> {
   TextEditingController _textFieldController = TextEditingController();
   String _fare = null;
+
+  @override
+  void initState() {
+    final fbm = FirebaseMessaging();
+    fbm.subscribeToTopic(LoggedInUserInfo.id);
+    fbm.requestNotificationPermissions();
+    fbm.configure(onMessage: (msg) {
+      showSimpleNotification(Text(msg['notification']['body']),
+          background: Colors.black87);
+    }, onLaunch: (msg) {
+      print(msg);
+    }, onResume: (msg) {
+      print(msg);
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -228,6 +246,20 @@ class _AdInfoScreenState extends State<AdInfoScreen> {
             .document(widget.ss['requestedUsers'][i])
             .delete();
       }
+      List l = widget.ss['joinedUsers'];
+      while (l.length < 3) {
+        String s = "DummySeat" + l.length.toString();
+        l.add(s);
+      }
+      await Firestore.instance.collection('FinishedTrips').add(
+        {
+          'creator': widget.ss.documentID,
+          'passengers': l,
+          'fare': '${int.parse(_fare) / (widget.ss['joinedUsers'].length + 1)}',
+        },
+      );
+      print(l.length);
+      print(widget.ss['joinedUsers'].length);
       for (int i = 0; i < widget.ss['joinedUsers'].length; i++) {
         await Firestore.instance
             .collection('userJoinedAds')

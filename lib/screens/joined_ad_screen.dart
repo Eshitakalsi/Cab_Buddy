@@ -1,11 +1,34 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 import '../models/loggedIn_user_info.dart';
 import '../widgets/joined_card.dart';
 
-class JoinedAdScreen extends StatelessWidget {
+class JoinedAdScreen extends StatefulWidget {
+  @override
+  _JoinedAdScreenState createState() => _JoinedAdScreenState();
+}
+
+class _JoinedAdScreenState extends State<JoinedAdScreen> {
+  @override
+  void initState() {
+    final fbm = FirebaseMessaging();
+    fbm.subscribeToTopic(LoggedInUserInfo.id);
+    fbm.requestNotificationPermissions();
+    fbm.configure(onMessage: (msg) {
+      showSimpleNotification(Text(msg['notification']['body']),
+          background: Colors.black87);
+    }, onLaunch: (msg) {
+      print(msg);
+    }, onResume: (msg) {
+      print(msg);
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

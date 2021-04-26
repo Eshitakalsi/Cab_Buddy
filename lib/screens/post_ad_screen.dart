@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -6,6 +7,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 import '../models/loggedIn_user_info.dart';
 
@@ -17,6 +19,22 @@ class PostAdScreen extends StatefulWidget {
 }
 
 class _PostAdScreenState extends State<PostAdScreen> {
+  @override
+  void initState() {
+    final fbm = FirebaseMessaging();
+    fbm.subscribeToTopic(LoggedInUserInfo.id);
+    fbm.requestNotificationPermissions();
+    fbm.configure(onMessage: (msg) {
+      showSimpleNotification(Text(msg['notification']['body']),
+          background: Colors.black87);
+    }, onLaunch: (msg) {
+      print(msg);
+    }, onResume: (msg) {
+      print(msg);
+    });
+    super.initState();
+  }
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   var _isLoading = false;
   String _vacancy;
@@ -26,9 +44,9 @@ class _PostAdScreenState extends State<PostAdScreen> {
   List<String> _locations = [
     'JIIT 62',
     'JIIT 128',
-    'Electronic City',
+    'Noida',
     'Vaishali',
-    'Shipra Mall'
+    'Shipra'
   ];
   List<String> _vacancies = ['1', '2', '3'];
   // List<String> _gates = ['1', '2', '3'];

@@ -123,7 +123,10 @@ class InfoCard extends StatelessWidget {
       await Firestore.instance
           .collection('Ads')
           .document(LoggedInUserInfo.id)
-          .updateData({'joinedUsers': l});
+          .updateData({
+        'joinedUsers': l,
+        'vacancy': (int.parse(doc['vacancy']) + 1).toString()
+      });
 
       return;
     } catch (error) {
