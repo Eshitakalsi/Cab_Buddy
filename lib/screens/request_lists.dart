@@ -35,6 +35,7 @@ class _RequestListsState extends State<RequestLists> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
+          centerTitle: true,
           title: Text("Requests"),
         ),
       ),

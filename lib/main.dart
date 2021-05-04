@@ -45,35 +45,36 @@ class MyApp extends StatelessWidget {
               }
               if (userSnapshot.hasData) {
                 return FutureBuilder(
-                    future: Firestore.instance
-                        .collection('users')
-                        .document(userSnapshot.data.uid)
-                        .get(),
-                    builder: (context, AsyncSnapshot<DocumentSnapshot> ss) {
-                      if (ss.connectionState == ConnectionState.waiting) {
-                        return SplashScreen();
-                      } else if (ss.hasError) {
-                        return ErrorScreen();
+                  future: Firestore.instance
+                      .collection('users')
+                      .document(userSnapshot.data.uid)
+                      .get(),
+                  builder: (context, AsyncSnapshot<DocumentSnapshot> ss) {
+                    if (ss.connectionState == ConnectionState.waiting) {
+                      return SplashScreen();
+                    } else if (ss.hasError) {
+                      return ErrorScreen();
+                    } else {
+                      if (ss.data.data != null) {
+                        LoggedInUserInfo.id = userSnapshot.data.uid;
+                        LoggedInUserInfo.name = ss.data.data['firstName'] +
+                            " " +
+                            ss.data.data['lastName'];
+                        LoggedInUserInfo.year = ss.data.data['year'];
+                        LoggedInUserInfo.gender = ss.data.data['gender'];
+                        LoggedInUserInfo.sector = ss.data.data['sector'];
+                        LoggedInUserInfo.batch = ss.data.data['batch'];
+                        LoggedInUserInfo.url = ss.data.data['image_url'];
+                        LoggedInUserInfo.email = userSnapshot.data.email;
+                        LoggedInUserInfo.favorites = ss.data['favorites'];
+                        return TabScreen();
                       } else {
-                        if (ss.data.data != null) {
-                          LoggedInUserInfo.id = userSnapshot.data.uid;
-                          LoggedInUserInfo.name = ss.data.data['firstName'] +
-                              " " +
-                              ss.data.data['lastName'];
-                          LoggedInUserInfo.year = ss.data.data['year'];
-                          LoggedInUserInfo.gender = ss.data.data['gender'];
-                          LoggedInUserInfo.sector = ss.data.data['sector'];
-                          LoggedInUserInfo.batch = ss.data.data['batch'];
-                          LoggedInUserInfo.url = ss.data.data['image_url'];
-                          LoggedInUserInfo.email = userSnapshot.data.email;
-                          LoggedInUserInfo.favorites = ss.data['favorites'];
-                          return TabScreen();
-                        } else {
-                          return UserFormScreen(
-                              userSnapshot.data.uid, userSnapshot.data.email);
-                        }
+                        return UserFormScreen(
+                            userSnapshot.data.uid, userSnapshot.data.email);
                       }
-                    });
+                    }
+                  },
+                );
               }
               return SigninScreen();
             },
